@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -49,6 +50,14 @@ public class JourneyController {
             }
             mNv = new ModelAndView(new RedirectView("/", true));
         }
+
+        return mNv;
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public ModelAndView createJourney(@PathVariable("id") Long id) {
+        ModelAndView mNv = new ModelAndView("journey/item");
+        mNv.addObject("journey", journeyService.getOne(id));
 
         return mNv;
     }

@@ -14,4 +14,5 @@ public interface JourneyService {
 
     void createJourney(JourneyForm form, String username) throws Exception;
 
+    Journey getOne(Long id);
 }

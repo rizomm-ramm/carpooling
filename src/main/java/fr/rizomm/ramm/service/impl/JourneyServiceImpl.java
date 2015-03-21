@@ -57,4 +57,9 @@ public class JourneyServiceImpl implements JourneyService {
 
         stopOffService.createStopOff(journey, departurePoint, arrivalPoint);
     }
+
+    @Override
+    public Journey getOne(Long id) {
+        return journeyRepository.getOne(id);
+    }
 }
