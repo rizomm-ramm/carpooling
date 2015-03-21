@@ -1,7 +1,9 @@
 package fr.rizomm.ramm.service;
 
 
+import fr.rizomm.ramm.model.Journey;
 import fr.rizomm.ramm.model.StopOff;
+import fr.rizomm.ramm.model.StopOffPoint;
 
 import java.util.List;
 
@@ -10,4 +12,8 @@ import java.util.List;
  */
 public interface StopOffService {
     List<StopOff> findAll();
+
+    StopOff saveAndFlush(StopOff stopOff);
+
+    StopOff createStopOff(Journey journey, StopOffPoint departure, StopOffPoint arrival) throws Exception;
 }

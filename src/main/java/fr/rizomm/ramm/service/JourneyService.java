@@ -1,6 +1,7 @@
 package fr.rizomm.ramm.service;
 
 
+import fr.rizomm.ramm.form.JourneyForm;
 import fr.rizomm.ramm.model.Journey;
 
 import java.util.List;
@@ -10,5 +11,7 @@ import java.util.List;
  */
 public interface JourneyService {
     List<Journey> findAll();
+
+    void createJourney(JourneyForm form, String username) throws Exception;
 
 }
