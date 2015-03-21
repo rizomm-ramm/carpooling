@@ -1,10 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
          pageEncoding="ISO-8859-1" %>
+<%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<html>
-<body>
-    <form action="/login" method="POST">
+<t:page title="login">
+    <c:if test="${not empty error}">
+        <div class="alert alert-danger">${error}</div>
+    </c:if>
+
+    <form action="login" method="POST">
         <div class="form-group">
             <label for="j_username">Nom d'utilisateur</label>
             <input type="text" class="form-control" id="j_username" name="j_username" placeholder="Nom d'utilisateur">
@@ -15,5 +19,4 @@
         </div>
         <button type="submit" class="btn btn-default">Connexion</button>
     </form>
-</body>
-</html>
+</t:page>
