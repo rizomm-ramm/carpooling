@@ -39,7 +39,7 @@ public class JourneyServiceImpl implements JourneyService {
     public void createJourney(SimpleJourneyForm form, String username) throws Exception {
         User user = userService.getOne(username);
 
-        Journey journey = Journey.builder().user(user).build();
+        Journey journey = Journey.builder().user(user).status(Journey.Status.INITIALIZED).build();
 
         SimpleJourneyForm.Address departureAddress = form.getDeparture();
         StopOffPoint departurePoint = StopOffPoint.builder()

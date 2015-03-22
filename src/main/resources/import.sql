@@ -5,7 +5,7 @@ insert into user_roles(username, ROLE) values ('akraxx', 'ROLE_ADMIN');
 insert into user_roles(username, ROLE) values ('akraxx', 'ROLE_USER');
 insert into user_roles(username, ROLE) values ('robin', 'ROLE_USER');
 
-insert into journeys(user_id) values('akraxx');
+insert into journeys(user_id, status) values('akraxx', 'ACTIVATED');
 
 insert into stopoff_point(latitude, longitude, address, description, type) values (3.04, 50.6, '36 Rue Paul Doumer, 59120 Loos, France', 'Simple description du point de rendez vous', 'DEPARTURE');
 insert into stopoff_point(latitude, longitude, address, description, type) values (3.0452, 50.6, '125 Rue du Capitaine Michel, 59120 Loos, France', 'Simple description du point de rendez vous à LOOS', 'ARRIVAL');
