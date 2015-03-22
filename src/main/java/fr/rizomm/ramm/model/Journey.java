@@ -6,7 +6,10 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.Builder;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -25,6 +28,13 @@ import java.util.List;
 @Entity(name = "journeys")
 public class Journey {
 
+    public enum Status {
+        INITIALIZED,
+        ACTIVATED,
+        CANCELED,
+        DONE
+    }
+
     @Id
     @GeneratedValue
     private Long id;
@@ -35,4 +45,9 @@ public class Journey {
 
     @OneToMany(mappedBy = "journey")
     private List<StopOff> stopOffs;
+
+    @Column(name = "status", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Status status;
+
 }

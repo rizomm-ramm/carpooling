@@ -1,6 +1,6 @@
 package fr.rizomm.ramm.controller;
 
-import fr.rizomm.ramm.form.JourneyForm;
+import fr.rizomm.ramm.form.SimpleJourneyForm;
 import fr.rizomm.ramm.service.JourneyService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +33,7 @@ public class JourneyController {
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public ModelAndView createJourney(@Valid @ModelAttribute JourneyForm journeyForm, BindingResult results, Principal principal) {
+    public ModelAndView createJourney(@Valid @ModelAttribute("journeyForm") SimpleJourneyForm simpleJourneyForm, BindingResult results, Principal principal) {
         ModelAndView mNv = new ModelAndView("index");
         if(results.hasErrors()) {
             log.warn("Unable to update the backlog, there are some errors [{}]", results.getAllErrors());
@@ -41,9 +41,9 @@ public class JourneyController {
 
         }
         else {
-            log.info("New journey to create [{}]", journeyForm);
+            log.info("New journey to create [{}]", simpleJourneyForm);
             try {
-                journeyService.createJourney(journeyForm, principal.getName());
+                journeyService.createJourney(simpleJourneyForm, principal.getName());
             } catch (Exception e) {
                 mNv.addAllObjects(results.getModel());
                 results.addError(new ObjectError("global", "Impossible de créer votre trajet"));

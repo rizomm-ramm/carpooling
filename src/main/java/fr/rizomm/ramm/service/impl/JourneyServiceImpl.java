@@ -1,6 +1,6 @@
 package fr.rizomm.ramm.service.impl;
 
-import fr.rizomm.ramm.form.JourneyForm;
+import fr.rizomm.ramm.form.SimpleJourneyForm;
 import fr.rizomm.ramm.model.Journey;
 import fr.rizomm.ramm.model.StopOffPoint;
 import fr.rizomm.ramm.model.User;
@@ -36,19 +36,19 @@ public class JourneyServiceImpl implements JourneyService {
     }
 
     @Override
-    public void createJourney(JourneyForm form, String username) throws Exception {
+    public void createJourney(SimpleJourneyForm form, String username) throws Exception {
         User user = userService.getOne(username);
 
         Journey journey = Journey.builder().user(user).build();
 
-        JourneyForm.Address departureAddress = form.getDeparture();
+        SimpleJourneyForm.Address departureAddress = form.getDeparture();
         StopOffPoint departurePoint = StopOffPoint.builder()
                 .address(departureAddress.getAddress())
                 .latitude(departureAddress.getLatitude())
                 .longitude(departureAddress.getLongitude())
                 .build();
 
-        JourneyForm.Address arrivalAddress = form.getArrival();
+        SimpleJourneyForm.Address arrivalAddress = form.getArrival();
         StopOffPoint arrivalPoint = StopOffPoint.builder()
                 .address(arrivalAddress.getAddress())
                 .latitude(arrivalAddress.getLatitude())
