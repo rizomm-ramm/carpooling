@@ -20,7 +20,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
+@ToString(exclude = "stopOffs")
 @Builder
 @Entity(name = "journeys")
 public class Journey {
