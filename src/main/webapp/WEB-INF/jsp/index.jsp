@@ -54,50 +54,33 @@
 
     <jsp:body>
         <h2 class="page-header">Covoiturage</h2>
+            <form:form cssClass="form-horizontal" role="form" modelAttribute="journeyForm" method="POST">
+                <div class="form-group">
+                    <form:label path="departure.address" id="departure_label" cssClass="col-sm-2 control-label">Départ :</form:label>
+                    <div class="col-sm-10">
+                        <form:input cssClass="form-control" path="departure.address" onfocus="geolocate()" id="departure" placeholder="Addresse de départ" />
 
-        <div role="tabpanel">
+                        <form:hidden path="departure.latitude" id="departure_latitude"  />
+                        <form:hidden path="departure.longitude" id="departure_longitude"  />
 
-            <!-- Nav tabs -->
-            <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active"><a href="#search" aria-controls="home" role="tab" data-toggle="tab">Recherche un trajet</a></li>
-                <li role="presentation"><a href="#create" aria-controls="profile" role="tab" data-toggle="tab">Proposer un trajet</a></li>
-            </ul>
-
-            <!-- Tab panes -->
-            <div class="tab-content">
-                <div role="tabpanel" class="tab-pane active" id="search">
-
+                        <form:errors path="departure.address" cssStyle="color:red;"/>
+                    </div>
                 </div>
-                <div role="tabpanel" class="tab-pane" id="create">
-                    <form:form cssClass="form-horizontal" role="form" modelAttribute="journeyForm" action="/journey/initialize" method="POST">
-                        <form:errors cssStyle="color:red;"/>
-                        <div class="form-group">
-                            <form:label path="departure.address" id="departure_label" cssClass="col-sm-2 control-label">Départ :</form:label>
-                            <div class="col-sm-6">
-                                <form:input cssClass="form-control" path="departure.address" onfocus="geolocate()" id="departure" placeholder="Addresse de départ" />
+                <div class="form-group">
+                    <form:label path="arrival.address" id="arrival_label" cssClass="col-sm-2 control-label">Arrivée :</form:label>
+                    <div class="col-sm-10">
+                        <form:input cssClass="form-control" path="arrival.address" onfocus="geolocate()" id="arrival" placeholder="Addresse d'arrivée" />
+                        <form:hidden path="arrival.latitude" id="arrival_latitude"  />
+                        <form:hidden path="arrival.longitude" id="arrival_longitude"  />
 
-                                <form:hidden path="departure.latitude" id="departure_latitude"  />
-                                <form:hidden path="departure.longitude" id="departure_longitude"  />
-
-                                <form:errors path="departure.address" cssStyle="color:red;"/>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <form:label path="arrival.address" id="arrival_label" cssClass="col-sm-2 control-label">Arrivée :</form:label>
-                            <div class="col-sm-6">
-                                <form:input cssClass="form-control" path="arrival.address" onfocus="geolocate()" id="arrival" placeholder="Addresse d'arrivée" />
-                                <form:hidden path="arrival.latitude" id="arrival_latitude"  />
-                                <form:hidden path="arrival.longitude" id="arrival_longitude"  />
-
-                                <form:errors path="arrival.address" cssStyle="color:red;"/>
-                            </div>
-                        </div>
-                        <button type="submit" class="btn btn-default">Enregistrer</button>
-                    </form:form>
+                        <form:errors path="arrival.address" cssStyle="color:red;"/>
+                    </div>
                 </div>
-            </div>
-
-        </div>
+                <div class="form-group text-center">
+                    <input type="submit" class="btn btn-default" formaction="/journey/initialize" value="Créer" />
+                    <input type="submit" class="btn btn-default" formaction="/journey/search" value="Chercher" />
+                </div>
+            </form:form>
     </jsp:body>
 
 </t:page>

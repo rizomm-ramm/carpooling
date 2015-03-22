@@ -1,6 +1,7 @@
 package fr.rizomm.ramm.form;
 
 import lombok.Data;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -17,6 +18,7 @@ public class SimpleJourneyForm {
         private Double latitude;
 
         @NotNull
+        @NotEmpty
         private String address;
     }
 
