@@ -69,7 +69,7 @@
 
                 </div>
                 <div role="tabpanel" class="tab-pane" id="create">
-                    <form:form cssClass="form-horizontal" role="form" modelAttribute="journeyForm" action="/journey/create" method="POST">
+                    <form:form cssClass="form-horizontal" role="form" modelAttribute="journeyForm" action="/journey/initialize" method="POST">
                         <form:errors cssStyle="color:red;"/>
                         <div class="form-group">
                             <form:label path="departure.address" id="departure_label" cssClass="col-sm-2 control-label">Départ :</form:label>

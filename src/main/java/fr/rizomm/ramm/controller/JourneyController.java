@@ -32,8 +32,8 @@ public class JourneyController {
         this.journeyService = journeyService;
     }
 
-    @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public ModelAndView createJourney(@Valid @ModelAttribute("journeyForm") SimpleJourneyForm simpleJourneyForm, BindingResult results, Principal principal) {
+    @RequestMapping(value = "/initialize", method = RequestMethod.POST)
+    public ModelAndView initializeJourney(@Valid @ModelAttribute("journeyForm") SimpleJourneyForm simpleJourneyForm, BindingResult results, Principal principal) {
         ModelAndView mNv = new ModelAndView("index");
         if(results.hasErrors()) {
             log.warn("Unable to update the backlog, there are some errors [{}]", results.getAllErrors());
