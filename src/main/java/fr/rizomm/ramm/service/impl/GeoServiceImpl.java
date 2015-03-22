@@ -59,6 +59,26 @@ public class GeoServiceImpl implements GeoService {
             addresses.add(geocodingApiRequest.formattedAddress);
         }
 
+
+
         return addresses;
+    }
+
+    @Override
+    public Double calculateDistance(Double originLat, Double originLng, Double toLat, Double toLng) {
+        double earthRadius = 6371000; //meters
+        double dLat = Math.toRadians(toLat-originLat);
+        double dLng = Math.toRadians(toLng-originLng);
+        double a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                Math.cos(Math.toRadians(originLat)) * Math.cos(Math.toRadians(toLat)) *
+                        Math.sin(dLng/2) * Math.sin(dLng/2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+
+        return earthRadius * c;
+    }
+
+    @Override
+    public Double calculateDistance(LatLng origin, LatLng to) {
+        return calculateDistance(origin.lat, origin.lng, to.lat, to.lng);
     }
 }

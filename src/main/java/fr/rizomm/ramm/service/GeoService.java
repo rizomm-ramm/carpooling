@@ -23,4 +23,8 @@ public interface GeoService {
 
     List<String> coordinateToAddress(LatLng latLng) throws Exception;
 
+    Double calculateDistance(Double originLat, Double originLng, Double toLat, Double toLng);
+
+    Double calculateDistance(LatLng origin, LatLng to);
+
 }
