@@ -1,6 +1,5 @@
 <%--suppress ALL --%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-         pageEncoding="ISO-8859-1" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
@@ -56,9 +55,9 @@
         <h2 class="page-header">Covoiturage</h2>
             <form:form cssClass="form-horizontal" role="form" modelAttribute="journeyForm" method="POST">
                 <div class="form-group">
-                    <form:label path="departure.address" id="departure_label" cssClass="col-sm-2 control-label">Départ :</form:label>
+                    <form:label path="departure.address" id="departure_label" cssClass="col-sm-2 control-label">DÃ©part :</form:label>
                     <div class="col-sm-10">
-                        <form:input cssClass="form-control" path="departure.address" onfocus="geolocate()" id="departure" placeholder="Addresse de départ" />
+                        <form:input cssClass="form-control" path="departure.address" onfocus="geolocate()" id="departure" placeholder="Addresse de dÃ©part" />
 
                         <form:hidden path="departure.latitude" id="departure_latitude"  />
                         <form:hidden path="departure.longitude" id="departure_longitude"  />
@@ -67,9 +66,9 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <form:label path="arrival.address" id="arrival_label" cssClass="col-sm-2 control-label">Arrivée :</form:label>
+                    <form:label path="arrival.address" id="arrival_label" cssClass="col-sm-2 control-label">ArrivÃ©e :</form:label>
                     <div class="col-sm-10">
-                        <form:input cssClass="form-control" path="arrival.address" onfocus="geolocate()" id="arrival" placeholder="Addresse d'arrivée" />
+                        <form:input cssClass="form-control" path="arrival.address" onfocus="geolocate()" id="arrival" placeholder="Addresse d'arrivÃ©e" />
                         <form:hidden path="arrival.latitude" id="arrival_latitude"  />
                         <form:hidden path="arrival.longitude" id="arrival_longitude"  />
 
@@ -77,7 +76,7 @@
                     </div>
                 </div>
                 <div class="form-group text-center">
-                    <input type="submit" class="btn btn-default" formaction="/journey/initialize" value="Créer" />
+                    <input type="submit" class="btn btn-default" formaction="/journey/initialize" value="CrÃ©er" />
                     <input type="submit" class="btn btn-default" formaction="/journey/search" value="Chercher" />
                 </div>
             </form:form>
