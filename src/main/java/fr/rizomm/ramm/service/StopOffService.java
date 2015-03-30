@@ -16,4 +16,6 @@ public interface StopOffService {
     StopOff saveAndFlush(StopOff stopOff);
 
     StopOff createStopOff(Journey journey, StopOffPoint departure, StopOffPoint arrival) throws Exception;
+
+    StopOff getOne(Long id);
 }

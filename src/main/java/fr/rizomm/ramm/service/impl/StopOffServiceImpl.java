@@ -70,4 +70,9 @@ public class StopOffServiceImpl implements StopOffService {
 
         return stopOffRepository.saveAndFlush(stopOff);
     }
+
+    @Override
+    public StopOff getOne(Long id) {
+        return stopOffRepository.getOne(id);
+    }
 }
