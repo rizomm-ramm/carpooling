@@ -14,7 +14,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -74,5 +80,28 @@ public class StopOffServiceImpl implements StopOffService {
     @Override
     public StopOff getOne(Long id) {
         return stopOffRepository.getOne(id);
+    }
+
+    @Override
+    public Map<StopOff, Double> findStopOffByLocation(double lat, double lng, double distanceMax) {
+        List<StopOff> stopOffs = findAll();
+
+        LinkedHashMap<StopOff, Double> matchingStopOffWithDistance = new LinkedHashMap<>();
+
+        stopOffs.forEach(stopOff -> {
+            Double distanceToDeparture = geoService.calculateDistance(stopOff.getDeparturePoint().getLatitude(), stopOff.getDeparturePoint().getLongitude(),
+                    lat, lng);
+
+            if (distanceToDeparture <= distanceMax) {
+                matchingStopOffWithDistance.put(stopOff, distanceToDeparture);
+            }
+
+        });
+
+        List<StopOff> matchingStopOffs = new ArrayList<>();
+
+        return matchingStopOffWithDistance.entrySet().stream()
+                .sorted(Map.Entry.comparingByValue())
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 }
