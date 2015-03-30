@@ -2,6 +2,7 @@ package fr.rizomm.ramm.controller;
 
 import fr.rizomm.ramm.form.SimpleJourneyForm;
 import fr.rizomm.ramm.model.StopOff;
+import fr.rizomm.ramm.model.StopOffDistance;
 import fr.rizomm.ramm.service.JourneyService;
 import fr.rizomm.ramm.service.StopOffService;
 import lombok.extern.slf4j.Slf4j;
@@ -45,16 +46,36 @@ public class StopOffController {
         return mNv;
     }
 
-    @RequestMapping(value = "/search", method = RequestMethod.GET)
-    public ModelAndView search(@RequestParam("lat") Double lat,
+    @RequestMapping(value = "/search/byDeparture", method = RequestMethod.GET)
+    public ModelAndView searchByDeparture(@RequestParam("lat") Double lat,
                                @RequestParam("lng") Double lng,
                                @RequestParam(value = "distanceMax", defaultValue = "10000") Double distanceMax) {
-        Map<StopOff, Double> matchingStopOffs = stopOffService.findStopOffByLocation(lat, lng, distanceMax);
+        Map<Double, StopOff> matchingStopOffs = stopOffService.findStopOffByLocation(lat, lng, distanceMax);
 
         log.info("Number of matching stopOffs [{}]", matchingStopOffs);
 
         ModelAndView mNv = new ModelAndView("stopoff/searchResult");
         mNv.addObject("matchingStopOffs", matchingStopOffs);
+
+        return mNv;
+    }
+
+    @RequestMapping(value = "/search", method = RequestMethod.GET)
+    public ModelAndView search(@Valid @ModelAttribute("journeyForm") SimpleJourneyForm simpleJourneyForm, BindingResult results) {
+        ModelAndView mNv = new ModelAndView("stopoff/searchResult");
+
+        if(results.hasErrors()) {
+            log.warn("Unable to update the backlog, there are some errors [{}]", results.getAllErrors());
+            mNv.addAllObjects(results.getModel());
+
+        } else {
+            Map<StopOffDistance, StopOff> matchingStopOffs = stopOffService.findStopOffByLocation(simpleJourneyForm);
+
+            log.info("Number of matching stopOffs [{}]", matchingStopOffs);
+
+            mNv.addObject("matchingStopOffs", matchingStopOffs);
+            mNv.addObject("journeyForm", simpleJourneyForm);
+        }
 
         return mNv;
     }

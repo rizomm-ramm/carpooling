@@ -1,8 +1,10 @@
 package fr.rizomm.ramm.service;
 
 
+import fr.rizomm.ramm.form.SimpleJourneyForm;
 import fr.rizomm.ramm.model.Journey;
 import fr.rizomm.ramm.model.StopOff;
+import fr.rizomm.ramm.model.StopOffDistance;
 import fr.rizomm.ramm.model.StopOffPoint;
 
 import java.util.List;
@@ -20,5 +22,7 @@ public interface StopOffService {
 
     StopOff getOne(Long id);
 
-    Map<StopOff, Double> findStopOffByLocation(double lat, double lng, double distanceMax);
+    Map<Double, StopOff> findStopOffByLocation(double lat, double lng, double distanceMax);
+
+    Map<StopOffDistance, StopOff> findStopOffByLocation(SimpleJourneyForm journeyForm);
 }

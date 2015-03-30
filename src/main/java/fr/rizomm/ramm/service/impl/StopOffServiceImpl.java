@@ -4,8 +4,10 @@ import com.google.maps.model.DistanceMatrix;
 import com.google.maps.model.DistanceMatrixElement;
 import com.google.maps.model.DistanceMatrixElementStatus;
 import com.google.maps.model.DistanceMatrixRow;
+import fr.rizomm.ramm.form.SimpleJourneyForm;
 import fr.rizomm.ramm.model.Journey;
 import fr.rizomm.ramm.model.StopOff;
+import fr.rizomm.ramm.model.StopOffDistance;
 import fr.rizomm.ramm.model.StopOffPoint;
 import fr.rizomm.ramm.repositories.StopOffRepository;
 import fr.rizomm.ramm.service.GeoService;
@@ -19,6 +21,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -83,25 +86,49 @@ public class StopOffServiceImpl implements StopOffService {
     }
 
     @Override
-    public Map<StopOff, Double> findStopOffByLocation(double lat, double lng, double distanceMax) {
+    public Map<Double, StopOff> findStopOffByLocation(double lat, double lng, double distanceMax) {
         List<StopOff> stopOffs = findAll();
 
-        LinkedHashMap<StopOff, Double> matchingStopOffWithDistance = new LinkedHashMap<>();
+        Map<Double, StopOff> matchingStopOffWithDistance = new TreeMap<>();
 
         stopOffs.forEach(stopOff -> {
             Double distanceToDeparture = geoService.calculateDistance(stopOff.getDeparturePoint().getLatitude(), stopOff.getDeparturePoint().getLongitude(),
                     lat, lng);
 
             if (distanceToDeparture <= distanceMax) {
-                matchingStopOffWithDistance.put(stopOff, distanceToDeparture);
+                matchingStopOffWithDistance.put(distanceToDeparture, stopOff);
             }
 
         });
 
-        List<StopOff> matchingStopOffs = new ArrayList<>();
+        return matchingStopOffWithDistance;
+    }
 
-        return matchingStopOffWithDistance.entrySet().stream()
-                .sorted(Map.Entry.comparingByValue())
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+    @Override
+    public Map<StopOffDistance, StopOff> findStopOffByLocation(SimpleJourneyForm journeyForm) {
+        List<StopOff> stopOffs = findAll();
+
+        Map<StopOffDistance, StopOff> matchingStopOffWithDistance = new TreeMap<>();
+
+        stopOffs.forEach(stopOff -> {
+            Double distanceToDeparture = geoService.calculateDistance(stopOff.getDeparturePoint().getLatitude(), stopOff.getDeparturePoint().getLongitude(),
+                    journeyForm.getDeparture().getLatitude(), journeyForm.getDeparture().getLongitude());
+
+            Double distanceToArrival = geoService.calculateDistance(stopOff.getArrivalPoint().getLatitude(), stopOff.getArrivalPoint().getLongitude(),
+                    journeyForm.getArrival().getLatitude(), journeyForm.getArrival().getLongitude());
+
+            // Convert precision to meters
+            if (distanceToDeparture <= (journeyForm.getDeparture().getPrecision() * 1000)
+                    && distanceToArrival <= (journeyForm.getArrival().getPrecision() * 1000)) {
+                matchingStopOffWithDistance.put(StopOffDistance.builder()
+                                .departureDistance(distanceToDeparture)
+                                .arrivalDistance(distanceToArrival)
+                                .build(),
+                        stopOff);
+            }
+
+        });
+
+        return matchingStopOffWithDistance;
     }
 }

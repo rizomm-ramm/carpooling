@@ -4,6 +4,7 @@ import lombok.Data;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 @Data
@@ -17,6 +18,9 @@ public class SimpleJourneyForm {
         @NotNull
         private Double latitude;
 
+        @Min(0)
+        private int precision = 20;
+
         @NotNull
         @NotEmpty
         private String address;
@@ -27,4 +31,5 @@ public class SimpleJourneyForm {
 
     @Valid
     private Address arrival = new Address();
+
 }
