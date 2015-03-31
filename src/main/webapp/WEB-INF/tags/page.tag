@@ -45,7 +45,9 @@
                                         <span class="glyphicon glyphicon-user"></span> <sec:authentication property="principal.username" />
                                         <span class="caret"></span></a>
                                     <ul class="dropdown-menu" role="menu">
-                                        <li><a href="/profile">Mon profile</a></li>
+                                        <li><a href="/profile/informations">Mon profil</a></li>
+                                        <li><a href="/profile/journeys">Mes trajets</a></li>
+                                        <li><a href="/profile/messages">Mes messages</a></li>
                                         <li class="divider"></li>
                                         <li><a href="/logout">Se déconnecter</a></li>
                                     </ul>

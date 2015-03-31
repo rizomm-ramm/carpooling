@@ -59,7 +59,7 @@
     <c:if test="${creation}" >
       <input type="submit" class="btn btn-default" formaction="/journey/initialize" value="Créer" />
     </c:if>
-    <input type="submit" class="btn btn-default" formaction="/stopoff/search" formmethod="get" value="Chercher" />
+    <input type="submit" class="btn btn-default" formaction="/stopoff/search#result" formmethod="get" value="Chercher" />
   </div>
 
   <script type="text/javascript">

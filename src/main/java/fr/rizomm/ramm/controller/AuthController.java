@@ -37,13 +37,37 @@ public class AuthController {
         return model;
     }
 
-    @RequestMapping(value = "/profile", method = RequestMethod.GET)
-    public ModelAndView profile(Principal principal) {
+    @RequestMapping(value = {"/profile", "/profile/informations"}, method = RequestMethod.GET)
+    public ModelAndView profileInformations(Principal principal) {
         if(principal == null) {
             throw new IllegalStateException("Vous n'êtes pas connecté.");
         }
 
-        ModelAndView mNv = new ModelAndView("profile/view");
+        ModelAndView mNv = new ModelAndView("profile/informations");
+        mNv.addObject("user", userService.getOne(principal.getName()));
+
+        return mNv;
+    }
+
+    @RequestMapping(value = "/profile/journeys", method = RequestMethod.GET)
+    public ModelAndView profileJourneys(Principal principal) {
+        if(principal == null) {
+            throw new IllegalStateException("Vous n'êtes pas connecté.");
+        }
+
+        ModelAndView mNv = new ModelAndView("profile/journeys");
+        mNv.addObject("user", userService.getOne(principal.getName()));
+
+        return mNv;
+    }
+
+    @RequestMapping(value = "/profile/messages", method = RequestMethod.GET)
+    public ModelAndView profileMessages(Principal principal) {
+        if(principal == null) {
+            throw new IllegalStateException("Vous n'êtes pas connecté.");
+        }
+
+        ModelAndView mNv = new ModelAndView("profile/messages");
         mNv.addObject("user", userService.getOne(principal.getName()));
 
         return mNv;

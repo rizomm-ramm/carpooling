@@ -8,7 +8,7 @@
 
 <t:page title="Etape">
   <t:journey_form journeyForm="${journeyForm}" creation="false" />
-  <h1 class="page-header">Résultat de votre recherche :</h1>
+  <h1 class="page-header" id="result">Résultat de votre recherche :</h1>
 
   <c:forEach items="${matchingStopOffs}" var="matchingStopOff">
     <h2>Départ à <fmt:formatNumber maxFractionDigits="2" value="${matchingStopOff.key.departureDistance / 1000}"/> kms de vous
