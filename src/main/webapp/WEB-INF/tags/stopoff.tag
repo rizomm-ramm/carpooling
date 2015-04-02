@@ -29,25 +29,64 @@
     </div>
     <div class="panel-body">
         <div class="row">
-            <div class="col-lg-12">
+            <div class="col-lg-8">
                 <h3>Participants :</h3>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th width="20%">Nom</th>
+                            <th width="10%">Statut</th>
+                            <th width="10%">Payé</th>
+                            <th width="60%">Commentaire</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <c:forEach items="${stopOff.reservations}" var="reservations">
+                            <td>${reservations.user.username}</td>
+                            <td class="text-center">
+                                <c:choose>
+                                    <c:when test="${reservations.status == 'WAITING'}">
+                                        <span class="glyphicon glyphicon-hourglass"></span>
+                                    </c:when>
+                                    <c:when test="${reservations.status == 'VALIDATED'}">
+                                        <span class="glyphicon glyphicon-ok"></span>
+                                    </c:when>
+                                    <c:when test="${reservations.status == 'REFUSED'}">
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                    </c:when>
+                                </c:choose>
+                            </td>
+                            <td class="text-center">
+                                <c:choose>
+                                    <c:when test="${reservations.payed}">
+                                        <span class="glyphicon glyphicon-ok"></span>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                    </c:otherwise>
+                                </c:choose>
+                            </td>
+                            <td>
+
+                            </td>
+                        </c:forEach>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-lg-4">
+                <h3>Légende :</h3>
+                Statut :
                 <ul>
-                    <c:forEach items="${stopOff.reservations}" var="reservations">
-                        <li>
-                            <c:choose>
-                                <c:when test="${reservations.status == 'WAITING'}">
-                                    <span class="glyphicon glyphicon-hourglass"></span>
-                                </c:when>
-                                <c:when test="${reservations.status == 'VALIDATED'}">
-                                    <span class="glyphicon glyphicon-ok"></span>
-                                </c:when>
-                                <c:when test="${reservations.status == 'REFUSED'}">
-                                    <span class="glyphicon glyphicon-remove"></span>
-                                </c:when>
-                            </c:choose>
-                            ${reservations.user.username}
-                        </li>
-                    </c:forEach>
+                    <li><span class="glyphicon glyphicon-hourglass"></span> En attente de votre validation</li>
+                    <li><span class="glyphicon glyphicon-ok"></span> Passager que vous avez validé</li>
+                    <li><span class="glyphicon glyphicon-remove"></span> Passager que vous avez refusé</li>
+                </ul>
+                Payé :
+                <ul>
+                    <li><span class="glyphicon glyphicon-ok"></span> Paiement reçu</li>
+                    <li><span class="glyphicon glyphicon-remove"></span> Paiement non reçu</li>
                 </ul>
             </div>
         </div>
