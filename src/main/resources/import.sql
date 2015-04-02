@@ -21,3 +21,5 @@ insert into stopoff_point(latitude, longitude, address, description, type) value
 insert into stopoff(journey_id, departure_point_id, arrival_point_id, distance, available_seats, price) values (0, 0, 1, 6520, 4, 3);
 insert into stopoff(journey_id, departure_point_id, arrival_point_id, distance, available_seats, price) values (1, 2, 3, 9222, 2, 5);
 insert into stopoff(journey_id, departure_point_id, arrival_point_id, distance, available_seats, price) values (2, 4, 5, 1270879, 2, 100);
+
+insert into stopoff_passengers VALUES(0, 'robin')

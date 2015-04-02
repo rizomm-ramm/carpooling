@@ -13,9 +13,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -40,6 +42,9 @@ public class StopOff {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "arrival_point_id")
     private StopOffPoint arrivalPoint;
+
+    @ManyToMany
+    private List<User> passengers;
 
     @Column(name = "distance", nullable = false)
     private Long distance;

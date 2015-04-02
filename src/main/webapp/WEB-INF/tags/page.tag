@@ -66,6 +66,11 @@
 
         <div id="pagescripts">
             <jsp:invoke fragment="scripts"/>
+            <script type="text/javascript">
+                $(function () {
+                    $('[data-toggle="tooltip"]').tooltip()
+                })
+            </script>
         </div>
     </div>
 </body>

@@ -10,6 +10,7 @@ import lombok.experimental.Builder;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import java.util.List;
 
@@ -19,7 +20,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(exclude = "roles")
+@ToString(exclude = {"roles", "journeys"})
 @Builder
 @Entity(name = "users")
 public class User {
@@ -35,7 +36,12 @@ public class User {
     @Column(name = "enabled", nullable = false)
     private boolean enabled;
 
+    @ManyToMany(mappedBy = "passengers")
+    private List<StopOff> stopOffs;
+
     @OneToMany(mappedBy = "user")
     private List<UserRole> roles;
 
+    @OneToMany(mappedBy = "user")
+    private List<Journey> journeys;
 }
