@@ -22,6 +22,7 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Data
 @NoArgsConstructor
@@ -71,5 +72,13 @@ public class StopOff {
     public void onInsert() {
         departurePoint.setType(StopOffPoint.Type.DEPARTURE);
         arrivalPoint.setType(StopOffPoint.Type.ARRIVAL);
+    }
+
+    public long numberOfValidatedReservation() {
+        return reservations.stream().filter(r -> StopOffReservation.Status.VALIDATED.equals(r.getStatus())).count();
+    }
+
+    public long numberOfRemainingReservation() {
+        return availableSeats - numberOfValidatedReservation();
     }
 }

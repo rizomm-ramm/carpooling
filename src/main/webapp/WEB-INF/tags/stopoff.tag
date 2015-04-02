@@ -7,14 +7,9 @@
 <div class="panel panel-default">
     <div class="panel-heading">
         <h5>
-            <c:if test="${adminMode}">
-                <span class="badge" data-toggle="tooltip" data-placement="top"
-                      title="Places en attente de votre validation">
-                    ${stopOff.availableSeats} <span class="glyphicon glyphicon-hourglass"></span>
-                </span>
-            </c:if>
-            <span class="badge" data-toggle="tooltip" data-placement="top" title="Places disponibles">
-                ${stopOff.availableSeats} <span class="glyphicon glyphicon-ok"></span>
+            <span class="badge" data-toggle="tooltip" data-placement="top"
+                  title="Nombre de places disponibles">
+                ${stopOff.numberOfRemainingReservation()} / ${stopOff.availableSeats}
             </span>
             |
             <span class="badge badge-default" data-toggle="tooltip" data-placement="top" title="Prix du trajet">
@@ -44,8 +39,8 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <c:forEach items="${stopOff.reservations}" var="reservations">
+                            <c:forEach items="${stopOff.reservations}" var="reservations">
+                                <tr>
                                     <td>${reservations.user.username}</td>
                                     <td class="text-center">
                                         <c:choose>
@@ -73,8 +68,8 @@
                                     <td>
 
                                     </td>
-                                </c:forEach>
-                            </tr>
+                                </tr>
+                            </c:forEach>
                             </tbody>
                         </table>
                     </div>
