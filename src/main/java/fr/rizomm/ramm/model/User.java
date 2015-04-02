@@ -3,16 +3,20 @@ package fr.rizomm.ramm.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.Builder;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Maximilien on 11/01/2015.
@@ -20,6 +24,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(exclude = {"stopOffReservations"})
 @ToString(exclude = {"roles", "journeys"})
 @Builder
 @Entity(name = "users")
@@ -36,8 +41,9 @@ public class User {
     @Column(name = "enabled", nullable = false)
     private boolean enabled;
 
-    @ManyToMany(mappedBy = "passengers")
-    private List<StopOff> stopOffs;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.user", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private Set<StopOffReservation> stopOffReservations;
 
     @OneToMany(mappedBy = "user")
     private List<UserRole> roles;

@@ -32,11 +32,22 @@
             <div class="col-lg-12">
                 <h3>Participants :</h3>
                 <ul>
-                    <c:forEach items="${stopOff.passengers}" var="passenger">
-                        <li>${passenger.username}</li>
+                    <c:forEach items="${stopOff.reservations}" var="reservations">
+                        <li>
+                            <c:choose>
+                                <c:when test="${reservations.status == 'WAITING'}">
+                                    <span class="glyphicon glyphicon-hourglass"></span>
+                                </c:when>
+                                <c:when test="${reservations.status == 'VALIDATED'}">
+                                    <span class="glyphicon glyphicon-ok"></span>
+                                </c:when>
+                                <c:when test="${reservations.status == 'REFUSED'}">
+                                    <span class="glyphicon glyphicon-remove"></span>
+                                </c:when>
+                            </c:choose>
+                            ${reservations.user.username}
+                        </li>
                     </c:forEach>
-                    <li><span class="glyphicon glyphicon-ok" data-toggle="tooltip" data-placement="top" title="Validé"></span> Test 1</li>
-                    <li><span class="glyphicon glyphicon-hourglass" data-toggle="tooltip" data-placement="top" title="En attente"></span> Test 1</li>
                 </ul>
             </div>
         </div>
