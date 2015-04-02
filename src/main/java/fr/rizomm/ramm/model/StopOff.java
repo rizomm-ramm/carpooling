@@ -26,7 +26,7 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
+@ToString(exclude = {"reservations"})
 @Builder
 @EqualsAndHashCode(exclude = {"reservations"})
 @Entity(name = "stopoff")

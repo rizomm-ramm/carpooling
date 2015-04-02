@@ -25,7 +25,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(exclude = {"stopOffReservations"})
-@ToString(exclude = {"roles", "journeys"})
+@ToString(exclude = {"roles", "journeys", "stopOffReservations"})
 @Builder
 @Entity(name = "users")
 public class User {

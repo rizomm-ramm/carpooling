@@ -1,9 +1,13 @@
 insert into users(username, password, enabled) values ('akraxx', '123456', 1);
 insert into users(username, password, enabled) values ('robin', '123456', 1);
+insert into users(username, password, enabled) values ('maxime', '123456', 1);
+insert into users(username, password, enabled) values ('amaury', '123456', 1);
 
 insert into user_roles(username, ROLE) values ('akraxx', 'ROLE_ADMIN');
 insert into user_roles(username, ROLE) values ('akraxx', 'ROLE_USER');
 insert into user_roles(username, ROLE) values ('robin', 'ROLE_USER');
+insert into user_roles(username, ROLE) values ('maxime', 'ROLE_USER');
+insert into user_roles(username, ROLE) values ('amaury', 'ROLE_USER');
 
 insert into journeys(user_id, status) values('akraxx', 'ACTIVATED');
 insert into journeys(user_id, status) values('akraxx', 'ACTIVATED');
@@ -22,4 +26,5 @@ insert into stopoff(journey_id, departure_point_id, arrival_point_id, distance, 
 insert into stopoff(journey_id, departure_point_id, arrival_point_id, distance, available_seats, price) values (1, 2, 3, 9222, 2, 5);
 insert into stopoff(journey_id, departure_point_id, arrival_point_id, distance, available_seats, price) values (2, 4, 5, 1270879, 2, 100);
 
-insert into stopoff_reservations (username, stopoff_id, payed, status) VALUES('robin', 0, false, 'WAITING')
+insert into stopoff_reservations (username, stopoff_id, payed, status) VALUES('robin', 0, false, 'WAITING');
+insert into stopoff_reservations (username, stopoff_id, payed, status) VALUES('amaury', 0, false, 'VALIDATED')
