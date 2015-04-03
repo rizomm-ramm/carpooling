@@ -14,11 +14,15 @@
     <%--css--%>
     <link rel="stylesheet" type="text/css" href="/resources/css/bootstrap.min.css" media="all"/>
     <link rel="stylesheet" type="text/css" href="/resources/css/bootstrap-theme.min.css" media="all"/>
+    <link rel="stylesheet" type="text/css" href="/resources/css/bootstrap-datetimepicker.css" media="all"/>
     <link rel="stylesheet" type="text/css" href="/resources/css/style.css" media="all"/>
 
     <%--javascript--%>
     <script type="text/javascript" src="/resources/js/jquery.min.js"></script>
     <script type="text/javascript" src="/resources/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/resources/js/moment.js"></script>
+    <script type="text/javascript" src="/resources/js/datetimepicker.js"></script>
+
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
 </head>
 <body data-spy="scroll" data-target="#myScrollspy">

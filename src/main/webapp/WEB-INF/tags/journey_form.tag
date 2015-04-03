@@ -1,10 +1,23 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@tag description="Journey form template" pageEncoding="UTF-8" %>
 <%@attribute name="journeyForm" required="true" type="fr.rizomm.ramm.form.SimpleJourneyForm" %>
 <%@attribute name="creation" required="true"  %>
 
+<c:set var="date" value="<%=new java.util.Date()%>" />
+<c:if test="${not empty journeyForm.date}">
+  <c:set var="date" value="${journeyForm.date}" />
+</c:if>
+<fmt:formatDate pattern="dd-MM-yyyy HH:mm" value="${date}" var="formattedJourneyDate" />
+
 <form:form cssClass="form-horizontal" role="form" modelAttribute="journeyForm" method="POST">
+  <div class="form-group">
+    <form:label path="date" cssClass="col-sm-2 control-label">Date :</form:label>
+    <div class="col-sm-10">
+      <form:input cssClass="form-control" path="date" id="date" value="${formattedJourneyDate}" />
+    </div>
+  </div>
   <div class="form-group">
     <form:label path="departure.address" id="departure_label" cssClass="col-sm-2 control-label">Départ :</form:label>
     <div class="col-sm-10">
@@ -88,6 +101,11 @@
       google.maps.event.addListener(autocompleteArrival, 'place_changed', function () {
         $("#arrival_latitude").val(autocompleteArrival.getPlace().geometry.location.D);
         $("#arrival_longitude").val(autocompleteArrival.getPlace().geometry.location.k);
+      });
+
+      $('#date').datetimepicker({
+        locale: 'fr',
+        defaultDate: '${formattedJourneyDate}'
       });
     });
 

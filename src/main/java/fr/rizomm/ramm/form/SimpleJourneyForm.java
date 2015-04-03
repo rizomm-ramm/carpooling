@@ -6,6 +6,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 
 @Data
 public class SimpleJourneyForm {
@@ -31,5 +32,8 @@ public class SimpleJourneyForm {
 
     @Valid
     private Address arrival = new Address();
+
+    @NotNull
+    private Date date;
 
 }
