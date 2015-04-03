@@ -5,17 +5,20 @@
 <%@attribute name="journeyForm" required="true" type="fr.rizomm.ramm.form.SimpleJourneyForm" %>
 <%@attribute name="creation" required="true"  %>
 
+<fmt:formatDate pattern="MM/dd/yyyy HH:mm" value="<%=new java.util.Date()%>" var="nowDate" />
 <c:set var="date" value="<%=new java.util.Date()%>" />
 <c:if test="${not empty journeyForm.date}">
   <c:set var="date" value="${journeyForm.date}" />
 </c:if>
-<fmt:formatDate pattern="dd-MM-yyyy HH:mm" value="${date}" var="formattedJourneyDate" />
+<fmt:formatDate pattern="MM/dd/yyyy HH:mm" value="${date}" var="formattedJourneyDate"  />
+<fmt:formatDate pattern="dd/MM/yyyy HH:mm" value="${date}" var="frenchFormattedJourneyDate"  />
+
 
 <form:form cssClass="form-horizontal" role="form" modelAttribute="journeyForm" method="POST">
   <div class="form-group">
     <form:label path="date" cssClass="col-sm-2 control-label">Date :</form:label>
     <div class="col-sm-10">
-      <form:input cssClass="form-control" path="date" id="date" value="${formattedJourneyDate}" />
+      <form:input cssClass="form-control" path="date" id="date" value="${frenchFormattedJourneyDate}" />
     </div>
   </div>
   <div class="form-group">
@@ -105,7 +108,9 @@
 
       $('#date').datetimepicker({
         locale: 'fr',
-        defaultDate: '${formattedJourneyDate}'
+        format: 'DD/MM/YYYY HH:mm',
+        defaultDate: '${formattedJourneyDate}',
+        minDate: '${nowDate}'
       });
     });
 

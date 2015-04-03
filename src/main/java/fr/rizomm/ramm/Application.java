@@ -17,8 +17,10 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import javax.servlet.DispatcherType;
 import javax.servlet.ServletContext;
+import java.util.Date;
 import java.util.EnumSet;
 import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  * Created by Maximilien on 11/01/2015.
@@ -36,6 +38,8 @@ public class Application extends WebMvcConfigurerAdapter {
     public LocaleResolver localeResolver() {
         SessionLocaleResolver slr = new SessionLocaleResolver();
         slr.setDefaultLocale(Locale.FRENCH);
+        slr.setDefaultTimeZone(TimeZone.getTimeZone("Europe/Paris"));
+
         return slr;
     }
 
