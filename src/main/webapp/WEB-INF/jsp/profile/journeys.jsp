@@ -3,7 +3,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<t:page title="Profile - Trajets">
+<t:page title="Profile - Trajets" notifications="${notifications}">
     <c:if test="${param.id}">
 
     </c:if>

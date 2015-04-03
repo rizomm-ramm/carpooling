@@ -106,9 +106,12 @@ public class StopOffController {
     public String statusUser(@RequestParam("stopOffId") Long stopOffId,
                              @RequestParam("passengerId") String username,
                              @RequestParam("status") StopOffReservation.Status status,
-                             Principal principal) {
-        stopOffService.changeReservationStatus(stopOffId, username, principal.getName(), status);
+                             Principal principal,
+                             final RedirectAttributes redirectAttributes) {
+        StopOffReservation reservation = stopOffService.changeReservationStatus(stopOffId, username, principal.getName(), status);
 
-        return "redirect:/";
+        redirectAttributes.addFlashAttribute("notifications", Collections.singletonList("Changement de statut de l'utilisateur " + username + " effectué."));
+
+        return "redirect:/profile/journeys?id="+reservation.getStopOff().getJourney().getId();
     }
 }

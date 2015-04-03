@@ -166,7 +166,7 @@ public class StopOffServiceImpl implements StopOffService {
     }
 
     @Override
-    public void changeReservationStatus(Long stopOffId, String passengerId, String loggedUser, StopOffReservation.Status status) {
+    public StopOffReservation changeReservationStatus(Long stopOffId, String passengerId, String loggedUser, StopOffReservation.Status status) {
         StopOff stopOff = getOne(stopOffId);
 
         if(!stopOff.getJourney().getUser().getUsername().equals(loggedUser)) {
@@ -183,7 +183,7 @@ public class StopOffServiceImpl implements StopOffService {
 
         reservation.setStatus(status);
 
-        stopOffReservationService.saveAndFlush(reservation);
+        return stopOffReservationService.saveAndFlush(reservation);
     }
 
 }

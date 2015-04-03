@@ -30,5 +30,5 @@ public interface StopOffService {
 
     void book(BookSeatForm bookSeatForm, String username);
 
-    void changeReservationStatus(Long stopOffId, String passengerId, String loggedUser, StopOffReservation.Status status);
+    StopOffReservation changeReservationStatus(Long stopOffId, String passengerId, String loggedUser, StopOffReservation.Status status);
 }
