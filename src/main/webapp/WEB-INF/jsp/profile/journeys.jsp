@@ -6,14 +6,20 @@
 <t:page title="Profile - Trajets">
     <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
         <c:forEach items="${user.journeys}" var="journey" varStatus="status">
-            <div class="panel panel-default">
+            <div class="panel panel-default" >
                 <div class="panel-heading" role="tab" id="journey-head-${status.index}">
-                    <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#journey-${status.index}"
-                           aria-expanded="true" aria-controls="journey-${status.index}">
-                            Trajet ${status.index}
-                        </a>
-                    </h4>
+                    <div class="row panel-title" role="button" data-toggle="collapse" data-parent="#accordion" href="#journey-${status.index}"
+                         aria-expanded="true" aria-controls="journey-${status.index}">
+                        <div class="col-lg-5 text-right">
+                            ${journey.stopOffs[0].departurePoint.address}
+                        </div>
+                        <div class="col-lg-2 text-center">
+                            <span class="glyphicon glyphicon-arrow-right"></span>
+                        </div>
+                        <div class="col-lg-5 text-left">
+                            ${journey.stopOffs[0].arrivalPoint.address}
+                        </div>
+                    </div>
                 </div>
                 <div id="journey-${status.index}" class="panel-collapse collapse <c:if test="${status.first}">in</c:if>"
                      role="tabpanel" aria-labelledby="journey-head-${status.index}">
