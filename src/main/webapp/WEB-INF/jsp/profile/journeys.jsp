@@ -4,20 +4,25 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <t:page title="Profile - Trajets" notifications="${notifications}">
+    <c:set var="type" value="driver" />
+    <c:if test="${not empty param.type and (param.type == 'passenger')}">
+        <c:set var="type" value="passenger" />
+    </c:if>
+
     <div role="tabpanel">
 
         <!-- Nav tabs -->
         <ul class="nav nav-tabs" role="tablist">
             <li role="presentation" class="control-label"><h4>Mes trajets en tant que : </h4></li>
-            <li role="presentation" class="active" style="padding-left: 50px;">
+            <li role="presentation" class="<c:if test="${type == 'driver'}">active</c:if>" style="padding-left: 50px;">
                 <a href="#driver" aria-controls="driver" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-list"></span> Conduteur</a>
             </li>
-            <li role="presentation"> <a href="#passenger" aria-controls="passenger" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-list"></span> Passager</a></li>
+            <li role="presentation" class="<c:if test="${type == 'passenger'}">active</c:if>"> <a href="#passenger" aria-controls="passenger" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-list"></span> Passager</a></li>
         </ul>
 
         <!-- Tab panes -->
         <div class="tab-content" style="padding-top: 15px;">
-            <div role="tabpanel" class="tab-pane active" id="driver">
+            <div role="tabpanel" class="tab-pane <c:if test="${type == 'driver'}">active</c:if>" id="driver">
                 <c:if test="${user.journeys.size() == 0}" >
                     <i>Vous n'avez créé aucun trajet.</i>
                 </c:if>
@@ -39,7 +44,7 @@
                                 </div>
                             </div>
                             <div id="journey-${status.index}" class="panel-collapse collapse
-                    <c:if test="${param.id == journey.id or (empty param.id and status.first)}">in</c:if>"
+                    <c:if test="${param.driverStoffOffid == journey.id or (empty param.driverStoffOffid and status.first)}">in</c:if>"
                                  role="tabpanel" aria-labelledby="journey-head-${status.index}">
                                 <div class="panel-body">
                                     <c:forEach items="${journey.stopOffs}" var="stopOff">
@@ -52,7 +57,7 @@
                 </div>
             </div>
 
-            <div role="tabpanel" class="tab-pane" id="passenger">
+            <div role="tabpanel" class="tab-pane <c:if test="${type == 'passenger'}">active</c:if>" id="passenger">
                 <c:if test="${user.stopOffReservations.size() == 0}" >
                     <i>Vous n'avez effectué aucune réservation.</i>
                 </c:if>
@@ -86,7 +91,7 @@
                                 </div>
                             </div>
                             <div id="reservation-${status.index}" class="panel-collapse collapse
-                        <c:if test="${param.id == reservation.stopOff.id or (empty param.id and status.first)}">in</c:if>"
+                        <c:if test="${param.passengerStoffOffid == reservation.stopOff.id or (empty param.passengerStoffOffid and status.first)}">in</c:if>"
                                  role="tabpanel" aria-labelledby="journey-head-${status.index}">
                                 <div class="panel-body">
                                     <div class="row">

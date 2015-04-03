@@ -160,7 +160,7 @@ public class StopOffServiceImpl implements StopOffService {
     }
 
     @Override
-    public void book(BookSeatForm bookSeatForm, String username) {
+    public StopOffReservation book(BookSeatForm bookSeatForm, String username) {
         StopOff stopOff = getOne(bookSeatForm.getStopOffId());
         User user = userService.getOne(username);
 
@@ -178,6 +178,8 @@ public class StopOffServiceImpl implements StopOffService {
         stopOff.getReservations().add(stopOffReservation);
 
         stopOffRepository.saveAndFlush(stopOff);
+
+        return stopOffReservation;
     }
 
     @Override

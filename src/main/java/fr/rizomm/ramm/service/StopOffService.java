@@ -28,7 +28,7 @@ public interface StopOffService {
 
     Map<StopOffDistance, StopOff> findStopOffByLocation(SimpleJourneyForm journeyForm);
 
-    void book(BookSeatForm bookSeatForm, String username);
+    StopOffReservation book(BookSeatForm bookSeatForm, String username);
 
     StopOffReservation changeReservationStatus(Long stopOffId, String passengerId, String loggedUser, StopOffReservation.Status status);
 }

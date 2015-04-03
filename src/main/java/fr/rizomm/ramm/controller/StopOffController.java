@@ -94,12 +94,13 @@ public class StopOffController {
         if(results.hasErrors()) {
             log.warn("Impossible de rechercher le trajet, erreurs : [{}]", results.getAllErrors());
             redirectAttributes.addFlashAttribute("errors", Collections.singletonList("Impossible d'effectuer la réservation"));
+            return "redirect:/stopoff/item/"+bookSeatForm.getStopOffId();
         } else {
-            stopOffService.book(bookSeatForm, principal.getName());
+            StopOffReservation reservation = stopOffService.book(bookSeatForm, principal.getName());
             redirectAttributes.addFlashAttribute("notifications", Collections.singletonList("Demande enregistrée, en attente de validation du conducteur"));
-        }
 
-        return "redirect:/stopoff/item/"+bookSeatForm.getStopOffId();
+            return "redirect:/profile/journeys?type=passenger&passengerStoffOffid="+reservation.getStopOff().getJourney().getId();
+        }
     }
 
     @RequestMapping(value = "/status/user", method = RequestMethod.GET)
@@ -112,6 +113,6 @@ public class StopOffController {
 
         redirectAttributes.addFlashAttribute("notifications", Collections.singletonList("Changement de statut de l'utilisateur " + username + " effectué."));
 
-        return "redirect:/profile/journeys?id="+reservation.getStopOff().getJourney().getId();
+        return "redirect:/profile/journeys?type=driver&driverStoffOffid="+reservation.getStopOff().getJourney().getId();
     }
 }
