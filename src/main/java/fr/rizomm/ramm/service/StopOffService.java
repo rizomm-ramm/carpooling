@@ -1,6 +1,7 @@
 package fr.rizomm.ramm.service;
 
 
+import fr.rizomm.ramm.form.BookSeatForm;
 import fr.rizomm.ramm.form.SimpleJourneyForm;
 import fr.rizomm.ramm.model.Journey;
 import fr.rizomm.ramm.model.StopOff;
@@ -25,4 +26,6 @@ public interface StopOffService {
     Map<Double, StopOff> findStopOffByLocation(double lat, double lng, double distanceMax);
 
     Map<StopOffDistance, StopOff> findStopOffByLocation(SimpleJourneyForm journeyForm);
+
+    void book(BookSeatForm bookSeatForm, String username);
 }

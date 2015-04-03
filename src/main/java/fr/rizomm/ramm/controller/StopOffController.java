@@ -1,5 +1,6 @@
 package fr.rizomm.ramm.controller;
 
+import fr.rizomm.ramm.form.BookSeatForm;
 import fr.rizomm.ramm.form.SimpleJourneyForm;
 import fr.rizomm.ramm.model.StopOff;
 import fr.rizomm.ramm.model.StopOffDistance;
@@ -16,10 +17,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.Collections;
 import java.util.Map;
 
 /**
@@ -38,11 +41,11 @@ public class StopOffController {
     }
 
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/item/{id}", method = RequestMethod.GET)
     public ModelAndView viewStopOff(@PathVariable("id") Long id) {
         ModelAndView mNv = new ModelAndView("stopoff/item");
         mNv.addObject("stopOff", stopOffService.getOne(id));
-
+        mNv.addObject("bookSeatForm",  new BookSeatForm());
         return mNv;
     }
 
@@ -65,7 +68,7 @@ public class StopOffController {
         ModelAndView mNv = new ModelAndView("stopoff/searchResult");
 
         if(results.hasErrors()) {
-            log.warn("Unable to update the backlog, there are some errors [{}]", results.getAllErrors());
+            log.warn("Impossible de rechercher le trajet, erreurs : [{}]", results.getAllErrors());
             mNv.addAllObjects(results.getModel());
 
         } else {
@@ -75,8 +78,26 @@ public class StopOffController {
 
             mNv.addObject("matchingStopOffs", matchingStopOffs);
             mNv.addObject("journeyForm", simpleJourneyForm);
+            mNv.addObject("bookSeatForm", new BookSeatForm());
         }
 
         return mNv;
+    }
+
+    @RequestMapping(value = "/book", method = RequestMethod.POST)
+    public String book(@Valid @ModelAttribute("bookSeatForm") BookSeatForm bookSeatForm,
+                             BindingResult results,
+                             Principal principal,
+                            final RedirectAttributes redirectAttributes) {
+
+        if(results.hasErrors()) {
+            log.warn("Impossible de rechercher le trajet, erreurs : [{}]", results.getAllErrors());
+            redirectAttributes.addFlashAttribute("errors", Collections.singletonList("Impossible d'effectuer la réservation"));
+        } else {
+            stopOffService.book(bookSeatForm, principal.getName());
+            redirectAttributes.addFlashAttribute("notifications", Collections.singletonList("Demande enregistrée, en attente de validation du conducteur"));
+        }
+
+        return "redirect:/stopoff/item/"+bookSeatForm.getStopOffId();
     }
 }

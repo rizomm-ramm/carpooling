@@ -22,6 +22,7 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 @Data
@@ -75,7 +76,12 @@ public class StopOff {
     }
 
     public long numberOfValidatedReservation() {
-        return reservations.stream().filter(r -> StopOffReservation.Status.VALIDATED.equals(r.getStatus())).count();
+        AtomicInteger validatedReservations = new AtomicInteger(0);
+        reservations.stream()
+                .filter(r -> StopOffReservation.Status.VALIDATED.equals(r.getStatus()))
+                .forEach(r -> validatedReservations.set(validatedReservations.get() + r.getSeats()));
+
+        return validatedReservations.get();
     }
 
     public long numberOfRemainingReservation() {

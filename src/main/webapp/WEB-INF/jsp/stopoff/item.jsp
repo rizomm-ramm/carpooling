@@ -5,7 +5,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 
-<t:page title="Etape">
+<t:page title="Etape" notifications="${notifications}">
     <h1>Trajet de ${stopOff.journey.user.username}</h1>
 
     <t:stopoff stopOff="${stopOff}" />

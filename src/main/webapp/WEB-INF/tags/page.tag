@@ -3,6 +3,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@tag description="Overall Page template" pageEncoding="UTF-8" %>
 <%@attribute name="title" required="true" %>
+<%@attribute name="notifications" type="java.util.List" %>
 <%@attribute name="scripts" fragment="true" %>
 <!DOCTYPE html>
 <html lang="fr">
@@ -62,13 +63,27 @@
                 </div><!-- /.container-fluid -->
             </nav>
         </div>
+
+        <c:if test="${notifications.size() > 0}">
+            <div class="alert alert-info" role="alert">
+                <ul>
+                    <c:forEach items="${notifications}" var="notification">
+                        <li>${notification}</li>
+                    </c:forEach>
+                </ul>
+            </div>
+        </c:if>
         <jsp:doBody/>
 
         <div id="pagescripts">
             <jsp:invoke fragment="scripts"/>
             <script type="text/javascript">
                 $(function () {
-                    $('[data-toggle="tooltip"]').tooltip()
+                    $('[data-toggle="tooltip"]').tooltip();
+                    $('[data-toggle="popover"]').popover();
+                    $('.link-popover').click(function(){
+                        $('.link-popover').not(this).popover('hide'); //all but this
+                    });
                 })
             </script>
         </div>

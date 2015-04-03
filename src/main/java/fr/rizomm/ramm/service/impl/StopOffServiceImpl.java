@@ -4,14 +4,19 @@ import com.google.maps.model.DistanceMatrix;
 import com.google.maps.model.DistanceMatrixElement;
 import com.google.maps.model.DistanceMatrixElementStatus;
 import com.google.maps.model.DistanceMatrixRow;
+import fr.rizomm.ramm.form.BookSeatForm;
 import fr.rizomm.ramm.form.SimpleJourneyForm;
 import fr.rizomm.ramm.model.Journey;
 import fr.rizomm.ramm.model.StopOff;
 import fr.rizomm.ramm.model.StopOffDistance;
 import fr.rizomm.ramm.model.StopOffPoint;
+import fr.rizomm.ramm.model.StopOffReservation;
+import fr.rizomm.ramm.model.StopOffReservationId;
+import fr.rizomm.ramm.model.User;
 import fr.rizomm.ramm.repositories.StopOffRepository;
 import fr.rizomm.ramm.service.GeoService;
 import fr.rizomm.ramm.service.StopOffService;
+import fr.rizomm.ramm.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,12 +37,15 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class StopOffServiceImpl implements StopOffService {
     private final StopOffRepository stopOffRepository;
     private final GeoService geoService;
+    private final UserService userService;
 
     @Autowired
     public StopOffServiceImpl(StopOffRepository stopOffRepository,
-                              GeoService geoService) {
+                              GeoService geoService,
+                              UserService userService) {
         this.stopOffRepository = stopOffRepository;
         this.geoService = geoService;
+        this.userService = userService;
     }
 
     @Override
@@ -130,5 +138,26 @@ public class StopOffServiceImpl implements StopOffService {
         });
 
         return matchingStopOffWithDistance;
+    }
+
+    @Override
+    public void book(BookSeatForm bookSeatForm, String username) {
+        StopOff stopOff = getOne(bookSeatForm.getStopOffId());
+        User user = userService.getOne(username);
+
+        if(stopOff.numberOfRemainingReservation() < bookSeatForm.getSeats()) {
+            throw new IllegalStateException("Plus assez de places disponibles");
+        }
+
+        StopOffReservation stopOffReservation = StopOffReservation.builder().pk(new StopOffReservationId(stopOff, user))
+                .seats(bookSeatForm.getSeats())
+                .description(bookSeatForm.getComment())
+                .status(StopOffReservation.Status.WAITING)
+                .payed(false)
+                .build();
+
+        stopOff.getReservations().add(stopOffReservation);
+
+        stopOffRepository.saveAndFlush(stopOff);
     }
 }

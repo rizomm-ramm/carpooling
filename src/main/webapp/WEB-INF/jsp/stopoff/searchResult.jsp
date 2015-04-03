@@ -6,9 +6,13 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 
-<t:page title="Etape">
+<t:page title="Etape" notifications="${notifications}">
   <t:journey_form journeyForm="${journeyForm}" creation="false" />
   <h1 class="page-header" id="result">Résultat de votre recherche :</h1>
+
+  <c:if test="${matchingStopOffs.size() == 0}">
+    <i>Aucun résultat correspond à votre recherche.</i>
+  </c:if>
 
   <c:forEach items="${matchingStopOffs}" var="matchingStopOff">
     <h2>Départ à <fmt:formatNumber maxFractionDigits="2" value="${matchingStopOff.key.departureDistance / 1000}"/> kms de vous

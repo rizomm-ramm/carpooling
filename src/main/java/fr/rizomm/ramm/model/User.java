@@ -49,5 +49,6 @@ public class User {
     private List<UserRole> roles;
 
     @OneToMany(mappedBy = "user")
+    @JsonIgnore
     private List<Journey> journeys;
 }

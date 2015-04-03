@@ -46,12 +46,18 @@ public class StopOffReservation {
     @JsonIgnore
     private StopOffReservationId pk;
 
-    @Column(name = "payed", nullable = false)
-    private boolean payed;
+    @Column(name = "seats", nullable = false)
+    private int seats = 1;
+
+    @Column(name = "payed", nullable = true)
+    private boolean payed = false;
+
+    @Column(name = "description", nullable = true)
+    private String description = "";
 
     @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)
-    private Status status;
+    private Status status = Status.WAITING;
 
     @Transient
     public StopOff getStopOff() {
