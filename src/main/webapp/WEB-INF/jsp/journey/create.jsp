@@ -55,68 +55,68 @@
     <jsp:body>
         <h3 class="page-header">Départ</h3>
         <div class="row">
-            <div class="col-lg-3">
+            <div class="col-md-3">
                 Adresse :
             </div>
-            <div class="col-lg-9">
+            <div class="col-md-9">
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-3">
+            <div class="col-md-3">
                 Horaire :
             </div>
-            <div class="col-lg-9">
+            <div class="col-md-9">
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-3">
+            <div class="col-md-3">
                 Note complémentaire :
             </div>
-            <div class="col-lg-9">
+            <div class="col-md-9">
             </div>
         </div>
         <h3 class="page-header">Arrivée</h3>
         <div class="row">
-            <div class="col-lg-3">
+            <div class="col-md-3">
                 Adresse :
             </div>
-            <div class="col-lg-9">
+            <div class="col-md-9">
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-3">
+            <div class="col-md-3">
                 Horaire :
             </div>
-            <div class="col-lg-9">
+            <div class="col-md-9">
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-3">
+            <div class="col-md-3">
                 Note complémentaire :
             </div>
-            <div class="col-lg-9">
+            <div class="col-md-9">
             </div>
         </div>
         <h3 class="page-header">Configuration du trajet</h3>
         <div class="row">
-            <div class="col-lg-3">
+            <div class="col-md-3">
                 Nombre de passagers :
             </div>
-            <div class="col-lg-9">
+            <div class="col-md-9">
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-3">
+            <div class="col-md-3">
                 Prix par passager :
             </div>
-            <div class="col-lg-9">
+            <div class="col-md-9">
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-3">
+            <div class="col-md-3">
                 Taille des bagages :
             </div>
-            <div class="col-lg-9">
+            <div class="col-md-9">
             </div>
         </div>
     </jsp:body>

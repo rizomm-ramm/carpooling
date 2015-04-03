@@ -4,38 +4,91 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <t:page title="Profile - Trajets" notifications="${notifications}">
-    <c:if test="${param.id}">
+    <div role="tabpanel">
 
-    </c:if>
-    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-        <c:forEach items="${user.journeys}" var="journey" varStatus="status">
-            <div class="panel panel-default" >
-                <div class="panel-heading" role="tab" id="journey-head-${status.index}">
-                    <div class="row panel-title" role="button" data-toggle="collapse" data-parent="#accordion" href="#journey-${status.index}"
-                         aria-expanded="true" aria-controls="journey-${status.index}">
-                        <div class="col-lg-5 text-right">
-                            ${journey.stopOffs[0].departurePoint.address}
-                        </div>
-                        <div class="col-lg-2 text-center">
-                            <span class="glyphicon glyphicon-arrow-right"></span>
-                        </div>
-                        <div class="col-lg-5 text-left">
-                            ${journey.stopOffs[0].arrivalPoint.address}
-                        </div>
-                    </div>
-                </div>
-                <div id="journey-${status.index}" class="panel-collapse collapse
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="control-label"><h4>Mes trajets en tant que : </h4></li>
+            <li role="presentation" class="active" style="padding-left: 50px;">
+                <a href="#driver" aria-controls="driver" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-list"></span> Conduteur</a>
+            </li>
+            <li role="presentation"> <a href="#passenger" aria-controls="passenger" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-list"></span> Passager</a></li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content" style="padding-top: 15px;">
+            <div role="tabpanel" class="tab-pane active" id="driver">
+                <c:if test="${user.journeys.size() == 0}" >
+                    <i>Vous n'avez créé aucun trajet.</i>
+                </c:if>
+                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                    <c:forEach items="${user.journeys}" var="journey" varStatus="status">
+                        <div class="panel panel-default" >
+                            <div class="panel-heading" role="tab" id="journey-head-${status.index}">
+                                <div class="row panel-title" role="button" data-toggle="collapse" data-parent="#accordion" href="#journey-${status.index}"
+                                     aria-expanded="true" aria-controls="journey-${status.index}">
+                                    <div class="col-md-5 text-right">
+                                            ${journey.stopOffs[0].departurePoint.address}
+                                    </div>
+                                    <div class="col-md-2 text-center">
+                                        <span class="glyphicon glyphicon-arrow-right"></span>
+                                    </div>
+                                    <div class="col-md-5 text-left">
+                                            ${journey.stopOffs[0].arrivalPoint.address}
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="journey-${status.index}" class="panel-collapse collapse
                     <c:if test="${param.id == journey.id or (empty param.id and status.first)}">in</c:if>"
-                     role="tabpanel" aria-labelledby="journey-head-${status.index}">
-                    <div class="panel-body">
-                        <c:forEach items="${journey.stopOffs}" var="stopOff">
-                            <t:stopoff stopOff="${stopOff}" adminMode="true"/>
-                        </c:forEach>
-                    </div>
+                                 role="tabpanel" aria-labelledby="journey-head-${status.index}">
+                                <div class="panel-body">
+                                    <c:forEach items="${journey.stopOffs}" var="stopOff">
+                                        <t:stopoff stopOff="${stopOff}" adminMode="true"/>
+                                    </c:forEach>
+                                </div>
+                            </div>
+                        </div>
+                    </c:forEach>
                 </div>
             </div>
-        </c:forEach>
-    </div>
 
+            <div role="tabpanel" class="tab-pane" id="passenger">
+                <c:forEach items="${user.stopOffReservations}" var="reservation" varStatus="status">
+                    <div class="panel panel-default" >
+                        <div class="panel-heading" role="tab" id="journey-head-${status.index}">
+                            <div class="row panel-title" role="button" data-toggle="collapse" data-parent="#accordion" href="#journey-${status.index}"
+                                 aria-expanded="true" aria-controls="journey-${status.index}">
+                                <div class="col-md-5 text-right">
+                                        ${reservation.stopOff.departurePoint.address}
+                                </div>
+                                <div class="col-md-2 text-center">
+                                    <span class="glyphicon glyphicon-arrow-right"></span>
+                                </div>
+                                <div class="col-md-5 text-left">
+                                        ${reservation.stopOff.arrivalPoint.address}
+                                </div>
+                            </div>
+                        </div>
+                        <div id="journey-${status.index}" class="panel-collapse collapse
+                    <c:if test="${param.id == reservation.stopOff.id or (empty param.id and status.first)}">in</c:if>"
+                             role="tabpanel" aria-labelledby="journey-head-${status.index}">
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <div class="page-header">Etat de la réservation</div>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <t:stopoff stopOff="${reservation.stopOff}"/>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </c:forEach>
+            </div>
+        </div>
+
+    </div>
 
 </t:page>

@@ -41,14 +41,14 @@
 
             <c:if test="${not creation}">
                 <div class="row" style="padding: 10px">
-                    <div class="col-lg-2 col-lg-offset-6 text-right control-label">
+                    <div class="col-md-2 col-md-offset-6 text-right control-label">
                         Précision :
                     </div>
-                    <div class="col-lg-2">
+                    <div class="col-md-2">
                         <form:input cssClass="form-control" type="text" path="departure.precision"/>
                         <form:errors path="departure.precision" cssStyle="color:red;"/>
                     </div>
-                    <div class="col-lg-2 control-label" style="text-align: left;">
+                    <div class="col-md-2 control-label" style="text-align: left;">
                         kms
                     </div>
                 </div>
@@ -67,14 +67,14 @@
 
             <c:if test="${not creation}">
                 <div class="row" style="padding: 10px">
-                    <div class="col-lg-2 col-lg-offset-6 text-right control-label">
+                    <div class="col-md-2 col-md-offset-6 text-right control-label">
                         Précision :
                     </div>
-                    <div class="col-lg-2">
+                    <div class="col-md-2">
                         <form:input cssClass="form-control" type="text" path="arrival.precision"/>
                         <form:errors path="arrival.precision" cssStyle="color:red;"/>
                     </div>
-                    <div class="col-lg-2 control-label" style="text-align: left;">
+                    <div class="col-md-2 control-label" style="text-align: left;">
                         kms
                     </div>
                 </div>

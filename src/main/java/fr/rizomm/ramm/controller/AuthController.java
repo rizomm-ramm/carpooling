@@ -1,5 +1,6 @@
 package fr.rizomm.ramm.controller;
 
+import fr.rizomm.ramm.form.BookSeatForm;
 import fr.rizomm.ramm.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -57,6 +58,7 @@ public class AuthController {
 
         ModelAndView mNv = new ModelAndView("profile/journeys");
         mNv.addObject("user", userService.getOne(principal.getName()));
+        mNv.addObject("bookSeatForm", new BookSeatForm());
 
         return mNv;
     }

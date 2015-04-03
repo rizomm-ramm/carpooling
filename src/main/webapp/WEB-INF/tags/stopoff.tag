@@ -38,7 +38,7 @@
         <div class="row">
             <c:choose>
                 <c:when test="${adminMode}">
-                    <div class="col-lg-8">
+                    <div class="col-md-8">
                         <h3>Participants :</h3>
                         <table class="table table-striped">
                             <thead>
@@ -97,7 +97,7 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-md-4">
                         <h3>Légende :</h3>
                         Statut :
                         <ul>
@@ -113,7 +113,7 @@
                     </div>
                 </c:when>
                 <c:otherwise>
-                    <div class="col-lg-8">
+                    <div class="col-md-8">
                         <h3>Participants :</h3>
                         <c:if test="${stopOff.reservations.size() == 0}">
                             <i>Aucun passager n'a encore été enregistré</i>
@@ -130,7 +130,7 @@
             </c:choose>
         </div>
         <div class="row">
-            <div class="col-lg-6">
+            <div class="col-md-6">
                 <b>Départ :</b>
                 <hr/>
                 <div>
@@ -144,7 +144,7 @@
                 </div>
 
             </div>
-            <div class="col-lg-6">
+            <div class="col-md-6">
                 <b>Arrivée :</b>
                 <hr/>
                 <div>

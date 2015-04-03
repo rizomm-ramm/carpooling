@@ -10,6 +10,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Carpooling - ${title}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
     <%--css--%>
     <link rel="stylesheet" type="text/css" href="/resources/css/bootstrap.min.css" media="all"/>
@@ -25,7 +26,7 @@
 
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
 </head>
-<body data-spy="scroll" data-target="#myScrollspy">
+<body>
     <div class="container">
         <div id="pageheader">
             <nav class="navbar navbar-default">
