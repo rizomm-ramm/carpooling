@@ -12,27 +12,42 @@
 </sec:authorize>
 <div class="panel panel-default">
     <div class="panel-heading">
-        <h5>
-
-            <span class="badge">
+        <div class="row">
+            <div class="col-md-2">
+                <span class="badge">
                 <span data-toggle="tooltip" data-placement="top"
-                       title="Nombre de places disponibles">${stopOff.numberOfRemainingReservation()} / ${stopOff.availableSeats}</span>
+                      title="Nombre de places disponibles">${stopOff.numberOfRemainingReservation()} / ${stopOff.availableSeats}</span>
 
                 <c:if test="${not adminMode and stopOff.numberOfRemainingReservation() > 0 and stopOff.journey.user.username != loggedUser and not stopOff.isAlreadyRegistered(loggedUser)}">
-                     <a href="#" data-toggle="modal" data-target="#register-modal-${stopOff.id}" data-remaining-reservations="${stopOff.numberOfRemainingReservation()}" data-stopoff-id="${stopOff.id}" style="color: white;">Réserver</a>
+                    <a href="#" data-toggle="modal" data-target="#register-modal-${stopOff.id}" data-remaining-reservations="${stopOff.numberOfRemainingReservation()}" data-stopoff-id="${stopOff.id}" style="color: white;">Réserver</a>
                 </c:if>
             </span>
-            |
+                |
             <span class="badge badge-default" data-toggle="tooltip" data-placement="top" title="Prix du trajet">
                 ${stopOff.price} &euro;
             </span>
-
-            ${stopOff.departurePoint.address} <span
-                class="glyphicon glyphicon-arrow-right"></span> ${stopOff.arrivalPoint.address} <span
-                class="pull-right"><b>${stopOff.distance / 1000} kms</b>
+            </div>
+            <div class="col-md-8 text-center" style="font-size: 18px;">
+                <div class="row">
+                    <div class="col-md-5">
+                        <b>${stopOff.departurePoint.address}</b>
+                    </div>
+                    <div class="col-md-2">
+                        <span class="glyphicon glyphicon-arrow-right"></span>
+                    </div>
+                    <div class="col-md-5">
+                        <b>${stopOff.arrivalPoint.address}</b>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2 text-right">
+                <b>${stopOff.distance / 1000} kms</b>
                 <c:if test="${adminMode}"> <a href="/stopoff/edit/${stopOff.id}"><span
                         class="glyphicon glyphicon-edit"></span> </a>
-                </c:if></span></h5>
+                </c:if>
+            </div>
+
+        </div>
     </div>
     <div class="panel-body">
         <div class="row">
