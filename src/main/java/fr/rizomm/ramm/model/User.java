@@ -15,8 +15,10 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Created by Maximilien on 11/01/2015.
@@ -51,4 +53,22 @@ public class User {
     @OneToMany(mappedBy = "user")
     @JsonIgnore
     private List<Journey> journeys;
+
+    public List<StopOffReservation> getActiveReservations() {
+        Date now = new Date();
+        return stopOffReservations
+                .stream()
+                .filter(s -> s.getStopOff().getDeparturePoint().getDate().compareTo(now) != -1)
+                .sorted((s1, s2) -> s1.getStopOff().getDeparturePoint().getDate().compareTo(s2.getStopOff().getDeparturePoint().getDate()))
+                .collect(Collectors.toList());
+    }
+
+    public List<StopOffReservation> getArchiveReservations() {
+        Date now = new Date();
+        return stopOffReservations
+                .stream()
+                .filter(s -> s.getStopOff().getDeparturePoint().getDate().compareTo(now) == -1)
+                .sorted((s1, s2) -> s1.getStopOff().getDeparturePoint().getDate().compareTo(s2.getStopOff().getDeparturePoint().getDate()))
+                .collect(Collectors.toList());
+    }
 }

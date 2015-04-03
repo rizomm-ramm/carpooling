@@ -29,4 +29,5 @@ insert into stopoff(journey_id, departure_point_id, arrival_point_id, distance, 
 insert into stopoff_reservations (username, stopoff_id, payed, status, seats) VALUES('robin', 0, false, 'WAITING', 1);
 insert into stopoff_reservations (username, stopoff_id, payed, status, seats) VALUES('amaury', 0, false, 'VALIDATED', 3);
 
+insert into stopoff_reservations (username, stopoff_id, payed, status, seats) VALUES('robin', 2, false, 'WAITING', 2);
 insert into stopoff_reservations (username, stopoff_id, payed, status, seats) VALUES('robin', 1, false, 'WAITING', 2);
