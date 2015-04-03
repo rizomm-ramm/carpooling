@@ -52,7 +52,20 @@
                             </thead>
                             <tbody>
                             <c:forEach items="${stopOff.reservations}" var="reservations">
-                                <tr>
+                                <c:set var="rowColor" value="" />
+                                <c:choose>
+                                    <c:when test="${reservations.status == 'WAITING'}">
+                                        <c:set var="rowColor" value="warning" />
+                                    </c:when>
+                                    <c:when test="${reservations.status == 'VALIDATED'}">
+                                        <c:set var="rowColor" value="success" />
+                                    </c:when>
+                                    <c:when test="${reservations.status == 'REFUSED'}">
+                                        <c:set var="rowColor" value="danger" />
+                                    </c:when>
+                                </c:choose>
+
+                                <tr class="${rowColor}">
                                     <td>${reservations.user.username}</td>
                                     <td>${reservations.seats}</td>
                                     <td class="text-center">
