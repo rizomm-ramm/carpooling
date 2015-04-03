@@ -2,6 +2,7 @@
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <t:page title="Profile - Trajets" notifications="${notifications}">
     <c:set var="type" value="driver" />
@@ -32,13 +33,16 @@
                             <div class="panel-heading" role="tab" id="journey-head-${status.index}">
                                 <div class="row panel-title" role="button" data-toggle="collapse" data-parent="#accordion" href="#journey-${status.index}"
                                      aria-expanded="true" aria-controls="journey-${status.index}">
-                                    <div class="col-md-5 text-right">
+                                    <div class="col-md-2 text-left">
+                                        <span class="glyphicon glyphicon-calendar"></span> <b><fmt:formatDate pattern="dd/MM/yyyy" value="${journey.stopOffs[0].departurePoint.date}" /></b>
+                                    </div>
+                                    <div class="col-md-4 text-right">
                                             ${journey.stopOffs[0].departurePoint.address}
                                     </div>
                                     <div class="col-md-2 text-center">
                                         <span class="glyphicon glyphicon-arrow-right"></span>
                                     </div>
-                                    <div class="col-md-5 text-left">
+                                    <div class="col-md-4 text-left">
                                             ${journey.stopOffs[0].arrivalPoint.address}
                                     </div>
                                 </div>
@@ -79,13 +83,16 @@
                             <div class="panel-heading" role="tab" id="journey-head-${status.index}">
                                 <div class="row panel-title" role="button" data-toggle="collapse" data-parent="#accordion-reservation" href="#reservation-${status.index}"
                                      aria-expanded="true" aria-controls="reservation-${status.index}">
-                                    <div class="col-md-5 text-right">
+                                    <div class="col-md-2 text-left">
+                                        <span class="glyphicon glyphicon-calendar"></span> <b><fmt:formatDate pattern="dd/MM/yyyy" value="${reservation.stopOff.departurePoint.date}" /></b>
+                                    </div>
+                                    <div class="col-md-4 text-right">
                                             ${reservation.stopOff.departurePoint.address}
                                     </div>
                                     <div class="col-md-2 text-center">
                                         <span class="glyphicon glyphicon-arrow-right"></span>
                                     </div>
-                                    <div class="col-md-5 text-left">
+                                    <div class="col-md-4 text-left">
                                             ${reservation.stopOff.arrivalPoint.address}
                                     </div>
                                 </div>
