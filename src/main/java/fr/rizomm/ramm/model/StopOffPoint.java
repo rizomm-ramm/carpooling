@@ -14,6 +14,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -41,6 +42,9 @@ public class StopOffPoint {
 
     @Column(name = "address", nullable = false)
     private String address;
+
+    @Column(name = "date", nullable = false)
+    private Date date;
 
     @Column(name = "description", nullable = true)
     private String description;

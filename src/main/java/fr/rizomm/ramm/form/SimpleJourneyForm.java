@@ -2,6 +2,7 @@ package fr.rizomm.ramm.form;
 
 import lombok.Data;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
@@ -34,6 +35,7 @@ public class SimpleJourneyForm {
     private Address arrival = new Address();
 
     @NotNull
+    @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
     private Date date;
 
 }

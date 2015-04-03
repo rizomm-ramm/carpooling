@@ -15,7 +15,8 @@
   </c:if>
 
   <c:forEach items="${matchingStopOffs}" var="matchingStopOff">
-    <h2>Départ à <fmt:formatNumber maxFractionDigits="2" value="${matchingStopOff.key.departureDistance / 1000}"/> kms de vous
+    <h2>Départ à <fmt:formatNumber maxFractionDigits="2" value="${matchingStopOff.key.departureDistance / 1000}"/> kms de vous le
+      <i><fmt:formatDate pattern="dd/MM/yyyy" value="${matchingStopOff.value.departurePoint.date}" /></i>
     <span class="pull-right"> Arrivée à <fmt:formatNumber maxFractionDigits="2" value="${matchingStopOff.key.arrivalDistance / 1000}"/> kms de vous</span></h2>
     <t:stopoff stopOff="${matchingStopOff.value}" />
   </c:forEach>

@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@tag description="StopOff Page template" pageEncoding="UTF-8" %>
 <%@attribute name="stopOff" required="true" type="fr.rizomm.ramm.model.StopOff" %>
 <%@attribute name="adminMode" %>
@@ -133,10 +134,10 @@
                 <b>Départ :</b>
                 <hr/>
                 <div>
-                    <span class="glyphicon glyphicon-calendar"></span> Heure estimée :
+                    <span class="glyphicon glyphicon-calendar"></span> <b><fmt:formatDate pattern="dd/MM/yyyy HH:mm" value="${stopOff.departurePoint.date}" /></b>
                 </div>
                 <div>
-                    ${stopOff.departurePoint.address}
+                    <span class="glyphicon glyphicon-map-marker"></span> ${stopOff.departurePoint.address}
                 </div>
                 <div>
                     <span class="glyphicon glyphicon-info-sign"></span> ${stopOff.departurePoint.description}
@@ -147,10 +148,10 @@
                 <b>Arrivée :</b>
                 <hr/>
                 <div>
-                    <span class="glyphicon glyphicon-calendar"></span> Heure estimée :
+                    <span class="glyphicon glyphicon-calendar"></span> <b><fmt:formatDate pattern="dd/MM/yyyy HH:mm" value="${stopOff.arrivalPoint.date}" /></b>
                 </div>
                 <div>
-                    ${stopOff.arrivalPoint.address}
+                    <span class="glyphicon glyphicon-map-marker"></span> ${stopOff.arrivalPoint.address}
                 </div>
                 <div>
                     <span class="glyphicon glyphicon-info-sign"></span> ${stopOff.arrivalPoint.description}

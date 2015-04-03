@@ -23,6 +23,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -123,25 +126,37 @@ public class StopOffServiceImpl implements StopOffService {
         Map<StopOffDistance, StopOff> matchingStopOffWithDistance = new TreeMap<>();
 
         stopOffs.forEach(stopOff -> {
-            Double distanceToDeparture = geoService.calculateDistance(stopOff.getDeparturePoint().getLatitude(), stopOff.getDeparturePoint().getLongitude(),
-                    journeyForm.getDeparture().getLatitude(), journeyForm.getDeparture().getLongitude());
+            if(stopOff.getDeparturePoint().getDate().compareTo(journeyForm.getDate()) != -1) {
 
-            Double distanceToArrival = geoService.calculateDistance(stopOff.getArrivalPoint().getLatitude(), stopOff.getArrivalPoint().getLongitude(),
-                    journeyForm.getArrival().getLatitude(), journeyForm.getArrival().getLongitude());
+                Double distanceToDeparture = geoService.calculateDistance(stopOff.getDeparturePoint().getLatitude(), stopOff.getDeparturePoint().getLongitude(),
+                        journeyForm.getDeparture().getLatitude(), journeyForm.getDeparture().getLongitude());
 
-            // Convert precision to meters
-            if (distanceToDeparture <= (journeyForm.getDeparture().getPrecision() * 1000)
-                    && distanceToArrival <= (journeyForm.getArrival().getPrecision() * 1000)) {
-                matchingStopOffWithDistance.put(StopOffDistance.builder()
-                                .departureDistance(distanceToDeparture)
-                                .arrivalDistance(distanceToArrival)
-                                .build(),
-                        stopOff);
+                Double distanceToArrival = geoService.calculateDistance(stopOff.getArrivalPoint().getLatitude(), stopOff.getArrivalPoint().getLongitude(),
+                        journeyForm.getArrival().getLatitude(), journeyForm.getArrival().getLongitude());
+
+                // Convert precision to meters
+                if (distanceToDeparture <= (journeyForm.getDeparture().getPrecision() * 1000)
+                        && distanceToArrival <= (journeyForm.getArrival().getPrecision() * 1000)) {
+                    matchingStopOffWithDistance.put(StopOffDistance.builder()
+                                    .departureDistance(distanceToDeparture)
+                                    .arrivalDistance(distanceToArrival)
+                                    .build(),
+                            stopOff);
+                }
             }
-
         });
 
-        return matchingStopOffWithDistance;
+        List<Map.Entry<StopOffDistance, StopOff>> list = new LinkedList<>(matchingStopOffWithDistance.entrySet());
+        Collections.sort(list, (o1, o2) ->
+                o1.getValue().getDeparturePoint().getDate().compareTo(o2.getValue().getDeparturePoint().getDate())
+        );
+
+        Map<StopOffDistance, StopOff> sortedMatchingStopOffWithDistance = new LinkedHashMap<>();
+
+        list.forEach( stopOffDistanceStopOffEntry ->
+                sortedMatchingStopOffWithDistance.put(stopOffDistanceStopOffEntry.getKey(), stopOffDistanceStopOffEntry.getValue())
+        );
+        return sortedMatchingStopOffWithDistance;
     }
 
     @Override
@@ -170,7 +185,7 @@ public class StopOffServiceImpl implements StopOffService {
         StopOff stopOff = getOne(stopOffId);
 
         if(!stopOff.getJourney().getUser().getUsername().equals(loggedUser)) {
-            throw new IllegalStateException("Vous n'avez pas créé ce trajet.");
+            throw new IllegalStateException("Vous n'avez pas crï¿½ï¿½ ce trajet.");
         }
 
         User passenger = userService.getOne(passengerId);
@@ -178,7 +193,7 @@ public class StopOffServiceImpl implements StopOffService {
         StopOffReservation reservation = stopOffReservationService.getOne(new StopOffReservationId(stopOff, passenger));
 
         if(!StopOffReservation.Status.WAITING.equals(reservation.getStatus())) {
-            throw new IllegalStateException("Le statut de la réservation n'est plus en attente et ne peut plus être modifié");
+            throw new IllegalStateException("Le statut de la rï¿½servation n'est plus en attente et ne peut plus ï¿½tre modifiï¿½");
         }
 
         reservation.setStatus(status);
