@@ -88,4 +88,10 @@ public class StopOff {
     public long numberOfRemainingReservation() {
         return availableSeats - numberOfValidatedReservation();
     }
+
+    public boolean isAlreadyRegistered(String username) {
+        return reservations.stream()
+                .filter(r -> r.getUser().getUsername().equals(username))
+                .count() > 0;
+    }
 }

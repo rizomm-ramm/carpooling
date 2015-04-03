@@ -170,7 +170,7 @@ public class StopOffServiceImpl implements StopOffService {
 
         StopOffReservation stopOffReservation = StopOffReservation.builder().pk(new StopOffReservationId(stopOff, user))
                 .seats(bookSeatForm.getSeats())
-                .description(bookSeatForm.getComment())
+                .comment(bookSeatForm.getComment())
                 .status(StopOffReservation.Status.WAITING)
                 .payed(false)
                 .build();

@@ -18,8 +18,8 @@
                 <span data-toggle="tooltip" data-placement="top"
                        title="Nombre de places disponibles">${stopOff.numberOfRemainingReservation()} / ${stopOff.availableSeats}</span>
 
-                <c:if test="${not adminMode and stopOff.numberOfRemainingReservation() > 0 and stopOff.journey.user.username != loggedUser}">
-                     <a href="#" data-toggle="modal" data-target="#register-modal" data-remaining-reservations="${stopOff.numberOfRemainingReservation()}" data-stopoff-id="${stopOff.id}" style="color: white;">Réserver</a>
+                <c:if test="${not adminMode and stopOff.numberOfRemainingReservation() > 0 and stopOff.journey.user.username != loggedUser and not stopOff.isAlreadyRegistered(loggedUser)}">
+                     <a href="#" data-toggle="modal" data-target="#register-modal-${stopOff.id}" data-remaining-reservations="${stopOff.numberOfRemainingReservation()}" data-stopoff-id="${stopOff.id}" style="color: white;">Réserver</a>
                 </c:if>
             </span>
             |
@@ -90,7 +90,7 @@
                                         </c:choose>
                                     </td>
                                     <td>
-                                        ${reservations.description}
+                                        ${reservations.comment}
                                     </td>
                                 </tr>
                             </c:forEach>
@@ -161,7 +161,7 @@
     </div>
 
     <c:if test="${not adminMode}">
-    <div class="modal fade" id="register-modal" tabindex="-1" role="dialog" aria-labelledby="register-modal-label" aria-hidden="true">
+    <div class="modal fade" id="register-modal-${stopOff.id}" tabindex="-1" role="dialog" aria-labelledby="register-modal-label" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -192,7 +192,7 @@
     </c:if>
     <script type="text/javascript">
         //triggered when modal is about to be shown
-        $('#register-modal').on('show.bs.modal', function(e) {
+        $('#register-modal-${stopOff.id}').on('show.bs.modal', function(e) {
 
             //get data-id attribute of the clicked element
             var stopOffId = $(e.relatedTarget).data('stopoff-id');

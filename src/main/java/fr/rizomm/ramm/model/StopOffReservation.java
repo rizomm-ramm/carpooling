@@ -52,8 +52,8 @@ public class StopOffReservation {
     @Column(name = "payed", nullable = true)
     private boolean payed = false;
 
-    @Column(name = "description", nullable = true)
-    private String description = "";
+    @Column(name = "comment", nullable = true)
+    private String comment = "";
 
     @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)
