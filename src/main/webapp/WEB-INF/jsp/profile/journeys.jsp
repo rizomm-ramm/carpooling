@@ -4,6 +4,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <t:page title="Profile - Trajets">
+    <c:if test="${param.id}">
+
+    </c:if>
     <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
         <c:forEach items="${user.journeys}" var="journey" varStatus="status">
             <div class="panel panel-default" >
@@ -21,7 +24,8 @@
                         </div>
                     </div>
                 </div>
-                <div id="journey-${status.index}" class="panel-collapse collapse <c:if test="${status.first}">in</c:if>"
+                <div id="journey-${status.index}" class="panel-collapse collapse
+                    <c:if test="${param.id == journey.id or (empty param.id and status.first)}">in</c:if>"
                      role="tabpanel" aria-labelledby="journey-head-${status.index}">
                     <div class="panel-body">
                         <c:forEach items="${journey.stopOffs}" var="stopOff">
