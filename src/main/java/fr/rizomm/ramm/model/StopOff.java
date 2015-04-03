@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @ToString(exclude = {"reservations"})
 @Builder
-@EqualsAndHashCode(exclude = {"reservations"})
+@EqualsAndHashCode(of = {"id"})
 @Entity(name = "stopoff")
 public class StopOff {
     @Id

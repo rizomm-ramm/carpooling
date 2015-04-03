@@ -4,6 +4,7 @@ import fr.rizomm.ramm.form.BookSeatForm;
 import fr.rizomm.ramm.form.SimpleJourneyForm;
 import fr.rizomm.ramm.model.StopOff;
 import fr.rizomm.ramm.model.StopOffDistance;
+import fr.rizomm.ramm.model.StopOffReservation;
 import fr.rizomm.ramm.service.JourneyService;
 import fr.rizomm.ramm.service.StopOffService;
 import lombok.extern.slf4j.Slf4j;
@@ -99,5 +100,15 @@ public class StopOffController {
         }
 
         return "redirect:/stopoff/item/"+bookSeatForm.getStopOffId();
+    }
+
+    @RequestMapping(value = "/status/user", method = RequestMethod.GET)
+    public String statusUser(@RequestParam("stopOffId") Long stopOffId,
+                             @RequestParam("passengerId") String username,
+                             @RequestParam("status") StopOffReservation.Status status,
+                             Principal principal) {
+        stopOffService.changeReservationStatus(stopOffId, username, principal.getName(), status);
+
+        return "redirect:/";
     }
 }

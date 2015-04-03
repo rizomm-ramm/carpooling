@@ -64,8 +64,10 @@
                                                       data-placement="top"
                                                         role="button"
                                                       data-content="<center>
-                                                            <a href='#'><span class='glyphicon glyphicon-ok' title='Valider'></span> </a>
-                                                            <a href='#'><span style='padding-left:15px;' class='glyphicon glyphicon-remove' title='Refuser'></a></span>
+                                                            <a href='/stopoff/status/user?stopOffId=${stopOff.id}&passengerId=${reservations.user.username}&status=VALIDATED'>
+                                                                <span class='glyphicon glyphicon-ok' title='Valider'></span>
+                                                            </a>
+                                                            <a href='/stopoff/status/user?stopOffId=${stopOff.id}&passengerId=${reservations.user.username}&status=REFUSED'><span style='padding-left:15px;' class='glyphicon glyphicon-remove' title='Refuser'></a></span>
                                                             </center>"></a>
                                             </c:when>
                                             <c:when test="${reservations.status == 'VALIDATED'}">

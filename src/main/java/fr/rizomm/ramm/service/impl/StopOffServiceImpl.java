@@ -15,6 +15,7 @@ import fr.rizomm.ramm.model.StopOffReservationId;
 import fr.rizomm.ramm.model.User;
 import fr.rizomm.ramm.repositories.StopOffRepository;
 import fr.rizomm.ramm.service.GeoService;
+import fr.rizomm.ramm.service.StopOffReservationService;
 import fr.rizomm.ramm.service.StopOffService;
 import fr.rizomm.ramm.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,14 +39,17 @@ public class StopOffServiceImpl implements StopOffService {
     private final StopOffRepository stopOffRepository;
     private final GeoService geoService;
     private final UserService userService;
+    private final StopOffReservationService stopOffReservationService;
 
     @Autowired
     public StopOffServiceImpl(StopOffRepository stopOffRepository,
                               GeoService geoService,
-                              UserService userService) {
+                              UserService userService,
+                              StopOffReservationService stopOffReservationService) {
         this.stopOffRepository = stopOffRepository;
         this.geoService = geoService;
         this.userService = userService;
+        this.stopOffReservationService = stopOffReservationService;
     }
 
     @Override
@@ -160,4 +164,26 @@ public class StopOffServiceImpl implements StopOffService {
 
         stopOffRepository.saveAndFlush(stopOff);
     }
+
+    @Override
+    public void changeReservationStatus(Long stopOffId, String passengerId, String loggedUser, StopOffReservation.Status status) {
+        StopOff stopOff = getOne(stopOffId);
+
+        if(!stopOff.getJourney().getUser().getUsername().equals(loggedUser)) {
+            throw new IllegalStateException("Vous n'avez pas créé ce trajet.");
+        }
+
+        User passenger = userService.getOne(passengerId);
+
+        StopOffReservation reservation = stopOffReservationService.getOne(new StopOffReservationId(stopOff, passenger));
+
+        if(!StopOffReservation.Status.WAITING.equals(reservation.getStatus())) {
+            throw new IllegalStateException("Le statut de la réservation n'est plus en attente et ne peut plus être modifié");
+        }
+
+        reservation.setStatus(status);
+
+        stopOffReservationService.saveAndFlush(reservation);
+    }
+
 }

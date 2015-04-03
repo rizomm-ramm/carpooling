@@ -7,6 +7,7 @@ import fr.rizomm.ramm.model.Journey;
 import fr.rizomm.ramm.model.StopOff;
 import fr.rizomm.ramm.model.StopOffDistance;
 import fr.rizomm.ramm.model.StopOffPoint;
+import fr.rizomm.ramm.model.StopOffReservation;
 
 import java.util.List;
 import java.util.Map;
@@ -28,4 +29,6 @@ public interface StopOffService {
     Map<StopOffDistance, StopOff> findStopOffByLocation(SimpleJourneyForm journeyForm);
 
     void book(BookSeatForm bookSeatForm, String username);
+
+    void changeReservationStatus(Long stopOffId, String passengerId, String loggedUser, StopOffReservation.Status status);
 }
