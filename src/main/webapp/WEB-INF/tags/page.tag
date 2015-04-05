@@ -20,6 +20,8 @@
 
     <%--javascript--%>
     <script type="text/javascript" src="/resources/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/resources/js/jquery.timeago.js"></script>
+    <script type="text/javascript" src="/resources/js/jquery.timeago.fr.js"></script>
     <script type="text/javascript" src="/resources/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/resources/js/moment.js"></script>
     <script type="text/javascript" src="/resources/js/datetimepicker.js"></script>
@@ -46,6 +48,38 @@
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav navbar-right">
                             <sec:authorize access="isAuthenticated()">
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                        <span class="badge alert-danger" style="font-size: 16px;">2 <span class="glyphicon glyphicon-bell"></span></span>
+                                        <span class="caret"></span></a>
+                                    <ul class="dropdown-menu" role="menu" style="width: 300px; padding: 0px;">
+                                        <li class="alert-success">
+                                            <a href="#">
+                                                <div>
+                                                    <span class="glyphicon glyphicon-eye-close"></span>
+                                                    <b>Robin</b> a validé votre réservation
+                                                </div>
+                                                <div class="text-right" style="font-size: 10px;">
+                                                    <abbr class="timeago" title="2011-12-17T09:24:17Z">December 17, 2011</abbr>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li class="alert-success" style="opacity: 0.6;">
+                                            <a href="#">
+                                                <div>
+                                                    <span class="glyphicon glyphicon-eye-open"></span>
+                                                    <b>Robin</b> a validé votre réservation
+                                                </div>
+                                                <div class="text-right" style="font-size: 10px;">
+                                                    <abbr class="timeago" title="2011-12-17T09:24:17Z">December 17, 2011</abbr>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li class="divider"></li>
+                                        <li class="text-right"><a href="/">Voir plus</a></li>
+                                    </ul>
+                                </li>
+
                                 <li class="dropdown">
                                     <a href="/profile" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                         <span class="glyphicon glyphicon-user"></span> <sec:authentication property="principal.username" />
@@ -89,6 +123,7 @@
                     $('.link-popover').click(function(){
                         $('.link-popover').not(this).popover('hide'); //all but this
                     });
+                    $("abbr.timeago").timeago();
                 })
             </script>
         </div>

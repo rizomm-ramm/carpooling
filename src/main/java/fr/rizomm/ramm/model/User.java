@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = {"username"})
-@ToString(exclude = {"roles", "journeys", "stopOffReservations"})
+@ToString(of = {"username"})
 @Builder
 @Entity(name = "users")
 public class User {
@@ -53,6 +53,10 @@ public class User {
     @OneToMany(mappedBy = "user")
     @JsonIgnore
     private List<Journey> journeys;
+
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    private List<Notification> notifications;
 
     public List<StopOffReservation> getActiveReservations() {
         Date now = new Date();
