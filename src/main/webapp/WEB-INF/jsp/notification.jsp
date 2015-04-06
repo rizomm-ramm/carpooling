@@ -18,9 +18,15 @@
   <c:if test="${not empty notification.link}">
     <c:set var="href" value="${notification.link}" />
   </c:if>
-  <li class="alert-${notification.type.name().toLowerCase()}" style="opacity: 0.6;">
+
+  <c:set var="opacity" value="0.6" />
+
+  <c:if test="${notification.status == 'UNREAD'}">
+    <c:set var="opacity" value="1" />
+  </c:if>
+  <li class="alert-${notification.type.name().toLowerCase()}" style="opacity: ${opacity}; overflow-wrap: break-word;">
     <a href="${href}">
-      <div>
+      <div style="overflow-wrap: break-word;">
         <span class="glyphicon glyphicon-eye-${eyeStatus}"></span>
         ${notification.message}
       </div>

@@ -7,6 +7,7 @@ import com.google.maps.model.DistanceMatrixRow;
 import fr.rizomm.ramm.form.BookSeatForm;
 import fr.rizomm.ramm.form.SimpleJourneyForm;
 import fr.rizomm.ramm.model.Journey;
+import fr.rizomm.ramm.model.Notification;
 import fr.rizomm.ramm.model.StopOff;
 import fr.rizomm.ramm.model.StopOffDistance;
 import fr.rizomm.ramm.model.StopOffPoint;
@@ -15,6 +16,7 @@ import fr.rizomm.ramm.model.StopOffReservationId;
 import fr.rizomm.ramm.model.User;
 import fr.rizomm.ramm.repositories.StopOffRepository;
 import fr.rizomm.ramm.service.GeoService;
+import fr.rizomm.ramm.service.NotificationService;
 import fr.rizomm.ramm.service.StopOffReservationService;
 import fr.rizomm.ramm.service.StopOffService;
 import fr.rizomm.ramm.service.UserService;
@@ -43,16 +45,19 @@ public class StopOffServiceImpl implements StopOffService {
     private final GeoService geoService;
     private final UserService userService;
     private final StopOffReservationService stopOffReservationService;
+    private final NotificationService notificationService;
 
     @Autowired
     public StopOffServiceImpl(StopOffRepository stopOffRepository,
                               GeoService geoService,
                               UserService userService,
-                              StopOffReservationService stopOffReservationService) {
+                              StopOffReservationService stopOffReservationService,
+                              NotificationService notificationService) {
         this.stopOffRepository = stopOffRepository;
         this.geoService = geoService;
         this.userService = userService;
         this.stopOffReservationService = stopOffReservationService;
+        this.notificationService = notificationService;
     }
 
     @Override
@@ -179,6 +184,13 @@ public class StopOffServiceImpl implements StopOffService {
 
         stopOffRepository.saveAndFlush(stopOff);
 
+        String notificationMessage = String.format("%s a effectué une demande de participation au trajet <br /> %s - %s ",
+                username, stopOff.getDeparturePoint().getAddress(), stopOff.getArrivalPoint().getAddress());
+
+        String link = String.format("/profile/journeys?type=driver&driverStoffOffid=%d", + stopOff.getJourney().getId());
+
+        notificationService.saveAndFlush(notificationMessage, Notification.Type.INFO, stopOff.getJourney().getUser().getUsername(), link);
+
         return stopOffReservation;
     }
 
@@ -187,7 +199,7 @@ public class StopOffServiceImpl implements StopOffService {
         StopOff stopOff = getOne(stopOffId);
 
         if(!stopOff.getJourney().getUser().getUsername().equals(loggedUser)) {
-            throw new IllegalStateException("Vous n'avez pas cr�� ce trajet.");
+            throw new IllegalStateException("Vous n'avez pas créé ce trajet.");
         }
 
         User passenger = userService.getOne(passengerId);
@@ -195,10 +207,22 @@ public class StopOffServiceImpl implements StopOffService {
         StopOffReservation reservation = stopOffReservationService.getOne(new StopOffReservationId(stopOff, passenger));
 
         if(!StopOffReservation.Status.WAITING.equals(reservation.getStatus())) {
-            throw new IllegalStateException("Le statut de la r�servation n'est plus en attente et ne peut plus �tre modifi�");
+            throw new IllegalStateException("Le statut de la réservation n'est plus en attente et ne peut plus �tre modifi�");
         }
 
         reservation.setStatus(status);
+
+        String notificationMessage = loggedUser + " a %s votre demande de participation au trajet <br /> "
+                + stopOff.getDeparturePoint().getAddress() + " - " + stopOff.getArrivalPoint().getAddress();
+
+        String link = String.format("/profile/journeys?type=passenger&passengerStoffOffid=%d", + stopOff.getJourney().getId());
+
+        if(status.equals(StopOffReservation.Status.VALIDATED)) {
+            notificationService.saveAndFlush(String.format(notificationMessage, "validé"), Notification.Type.SUCCESS, passengerId, link);
+        } else {
+            notificationService.saveAndFlush(String.format(notificationMessage, "refusé"), Notification.Type.DANGER, passengerId, link);
+        }
+
 
         return stopOffReservationService.saveAndFlush(reservation);
     }

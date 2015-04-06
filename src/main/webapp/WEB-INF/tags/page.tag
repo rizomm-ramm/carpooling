@@ -55,7 +55,7 @@
                                             <span class="glyphicon glyphicon-bell"></span>
                                         </span>
                                         <span class="caret"></span></a>
-                                    <ul class="dropdown-menu" role="menu" style="width: 300px; padding: 0px;" id="notifications">
+                                    <ul class="dropdown-menu" role="menu" style="padding: 0;" id="notifications">
                                     </ul>
                                 </li>
 

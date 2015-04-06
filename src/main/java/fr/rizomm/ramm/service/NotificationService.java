@@ -21,6 +21,8 @@ public interface NotificationService {
 
     Notification saveAndFlush(Notification notification);
 
+    Notification saveAndFlush(String message, Notification.Type type, String username, String link);
+
     Notification getOne(Long id);
 
     List<Notification> getLastNotifications(String username);
