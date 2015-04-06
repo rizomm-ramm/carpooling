@@ -49,34 +49,13 @@
                         <ul class="nav navbar-nav navbar-right">
                             <sec:authorize access="isAuthenticated()">
                                 <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                        <span class="badge alert-danger" style="font-size: 16px;">2 <span class="glyphicon glyphicon-bell"></span></span>
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" id="notification-block">
+                                        <span class="badge" style="font-size: 16px;" id="notification-badge">
+                                            <span id="notification-number">0</span>
+                                            <span class="glyphicon glyphicon-bell"></span>
+                                        </span>
                                         <span class="caret"></span></a>
-                                    <ul class="dropdown-menu" role="menu" style="width: 300px; padding: 0px;">
-                                        <li class="alert-success">
-                                            <a href="#">
-                                                <div>
-                                                    <span class="glyphicon glyphicon-eye-close"></span>
-                                                    <b>Robin</b> a validé votre réservation
-                                                </div>
-                                                <div class="text-right" style="font-size: 10px;">
-                                                    <abbr class="timeago" title="2011-12-17T09:24:17Z">December 17, 2011</abbr>
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <li class="alert-success" style="opacity: 0.6;">
-                                            <a href="#">
-                                                <div>
-                                                    <span class="glyphicon glyphicon-eye-open"></span>
-                                                    <b>Robin</b> a validé votre réservation
-                                                </div>
-                                                <div class="text-right" style="font-size: 10px;">
-                                                    <abbr class="timeago" title="2011-12-17T09:24:17Z">December 17, 2011</abbr>
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <li class="divider"></li>
-                                        <li class="text-right"><a href="/">Voir plus</a></li>
+                                    <ul class="dropdown-menu" role="menu" style="width: 300px; padding: 0px;" id="notifications">
                                     </ul>
                                 </li>
 
@@ -125,6 +104,32 @@
                     });
                     $("abbr.timeago").timeago();
                 })
+
+                <sec:authorize access="isAuthenticated()">
+                    setUnreadNotificationsCount();
+                    window.setInterval(function(){
+                        setUnreadNotificationsCount();
+                    }, 5000);
+
+                    function setUnreadNotificationsCount() {
+                        $.get( "/notification/unread/count", function( data ) {
+                            $("#notification-number" ).html( data );
+
+                            if(data > 0) {
+                                $("#notification-badge").addClass("alert-danger");
+                            } else {
+                                $("#notification-badge").removeClass("alert-danger");
+                            }
+                        });
+                    }
+
+                    $("#notification-block").hover(function() {
+                        $.get( "/notification/", function( data ) {
+                            $("#notifications").html( data );
+                            $("abbr.timeago").timeago();
+                        });
+                    });
+                </sec:authorize>
             </script>
         </div>
     </div>
