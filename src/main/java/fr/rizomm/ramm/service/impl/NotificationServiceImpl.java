@@ -57,6 +57,15 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     @Override
+    public void setAllReadNotifications(String username) {
+
+        getUnreadNotifications(username).forEach(notification -> {
+            notification.setStatus(Notification.Status.READ);
+            notificationRepository.saveAndFlush(notification);
+        });
+    }
+
+    @Override
     public Notification getOne(Long id) {
         return notificationRepository.getOne(id);
     }

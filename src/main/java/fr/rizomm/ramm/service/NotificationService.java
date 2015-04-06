@@ -28,4 +28,6 @@ public interface NotificationService {
     List<Notification> getLastNotifications(String username);
 
     List<Notification> getUnreadNotifications(String username);
+
+    void setAllReadNotifications(String username);
 }

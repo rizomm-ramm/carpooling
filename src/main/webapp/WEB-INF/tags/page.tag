@@ -128,7 +128,13 @@
                             $("#notifications").html( data );
                             $("abbr.timeago").timeago();
                         });
+                    }, function() {
+                        $.get( "/notification/allread");
+
+                        $("#notification-number" ).html(0);
+                        $("#notification-badge").removeClass("alert-danger");
                     });
+
                 </sec:authorize>
             </script>
         </div>

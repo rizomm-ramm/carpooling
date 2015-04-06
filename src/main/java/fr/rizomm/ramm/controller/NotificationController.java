@@ -34,6 +34,11 @@ public class NotificationController {
         return notificationService.getUnreadNotifications(principal.getName()).size();
     }
 
+    @RequestMapping(value = "/allread", method = RequestMethod.GET)
+    public void allReadNotifications(Principal principal) {
+        notificationService.setAllReadNotifications(principal.getName());
+    }
+
     @RequestMapping(value = "/", method = RequestMethod.GET)
     @ResponseBody
     public ModelAndView getLastNotifications(Principal principal) {
