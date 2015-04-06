@@ -14,6 +14,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import java.util.Date;
 
 @Data
 @NoArgsConstructor
@@ -54,4 +55,10 @@ public class Notification {
 
     @Column(name = "message", nullable = false)
     private String message;
+
+    @Column(name = "date", nullable = false)
+    private Date date;
+
+    @Column(name = "link", nullable = true)
+    private String link;
 }
