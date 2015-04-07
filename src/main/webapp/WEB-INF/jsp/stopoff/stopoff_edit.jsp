@@ -19,14 +19,48 @@
   <fmt:formatDate pattern="dd/MM/yyyy HH:mm" value="${stopOff.departurePoint.date}" var="departureDate"/>
   <fmt:formatDate pattern="dd/MM/yyyy HH:mm" value="${stopOff.arrivalPoint.date}" var="arrivalDate"/>
 
-
+  <c:set var="unmodifiable" value="false" />
+  <c:choose>
+    <c:when test="${stopOff.status == 'INITIALIZED'}">
+      <div class="alert alert-warning alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <strong>Ce trajet n'est pas activé et n'apparaît donc pas dans la recherche!</strong>
+        <p>
+          Pour l'activer, veuillez remplir les informations suivantes :
+        <ul>
+          <li>Le nombre de places disponibles (supérieur à 0)</li>
+          <li>Le prix du trajet (supérieur à 0)</li>
+        </ul>
+        </p>
+      </div>
+    </c:when>
+    <c:when test="${stopOff.reservations.size() == 0}">
+      <div class="alert alert-warning alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <strong>Ce trajet est activé, mais aucune resérvation n'a été effectuée!</strong>
+        <p>
+          Vous pouvez modifier tous les paramètres de ce trajet.
+        </p>
+      </div>
+    </c:when>
+    <c:otherwise>
+      <c:set var="unmodifiable" value="true" />
+      <div class="alert alert-info alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <strong>Ce trajet est activé, mais au moins une resérvation a été effectuée!</strong>
+        <p>
+          Vous ne pouvez plus modifier les informations relatives à celui ci.
+        </p>
+      </div>
+    </c:otherwise>
+  </c:choose>
 
   <form:form cssClass="form-horizontal" role="form" modelAttribute="stopOff" method="POST">
     <div class="form-group">
       <form:label path="departurePoint.date" cssClass="col-sm-2 control-label">Date de départ :</form:label>
       <div class="col-sm-10">
         <div class='input-group date'>
-          <form:input cssClass="form-control" path="departurePoint.date" id="departure_date" value="${departureDate}"/>
+          <form:input cssClass="form-control" path="departurePoint.date" id="departure_date" value="${departureDate}" disabled="${unmodifiable}"/>
                 <span class="input-group-addon">
                     <span class="glyphicon glyphicon-calendar"></span>
                 </span>
@@ -39,7 +73,7 @@
                   cssClass="col-sm-2 control-label">Départ :</form:label>
       <div class="col-sm-10">
         <form:input cssClass="form-control" path="departurePoint.address" onfocus="geolocate()" id="departure"
-                    placeholder="Addresse de départ"/>
+                    placeholder="Addresse de départ" disabled="${unmodifiable}" />
 
         <form:hidden path="departurePoint.latitude" id="departure_latitude"/>
         <form:hidden path="departurePoint.longitude" id="departure_longitude"/>
@@ -51,7 +85,7 @@
       <form:label path="arrivalPoint.date" cssClass="col-sm-2 control-label">Date d'arrivée :</form:label>
       <div class="col-sm-10">
         <div class='input-group date'>
-          <form:input cssClass="form-control" path="arrivalPoint.date" id="arrival_date" value="${arrivalDate}"/>
+          <form:input cssClass="form-control" path="arrivalPoint.date" id="arrival_date" value="${arrivalDate}" disabled="${unmodifiable}"/>
                 <span class="input-group-addon">
                     <span class="glyphicon glyphicon-calendar"></span>
                 </span>
@@ -63,7 +97,7 @@
       <form:label path="arrivalPoint.address" id="arrival_label" cssClass="col-sm-2 control-label">Arrivée :</form:label>
       <div class="col-sm-10">
         <form:input cssClass="form-control" path="arrivalPoint.address" onfocus="geolocate()" id="arrival"
-                    placeholder="Addresse d'arrivée"/>
+                    placeholder="Addresse d'arrivée" disabled="${unmodifiable}"/>
 
         <form:hidden path="arrivalPoint.latitude" id="arrival_latitude"/>
         <form:hidden path="arrivalPoint.longitude" id="arrival_longitude"/>
@@ -71,12 +105,24 @@
         <form:errors path="arrivalPoint.address" cssStyle="color:red;"/>
       </div>
     </div>
+    <div class="form-group">
+      <form:label path="price" cssClass="col-sm-2 control-label">Prix :</form:label>
+      <div class="col-sm-4">
+        <form:input cssClass="form-control" path="price" placeholder="Prix" disabled="${unmodifiable}"/>
+
+        <form:errors path="price" cssStyle="color:red;"/>
+      </div>
+      <form:label path="price" cssClass="col-sm-2 control-label">Places disponibles :</form:label>
+      <div class="col-sm-4">
+        <form:input cssClass="form-control" type="number" path="availableSeats" placeholder="Places disponibles" disabled="${unmodifiable}"/>
+
+        <form:errors path="availableSeats" cssStyle="color:red;"/>
+      </div>
+    </div>
     <div class="form-group text-center">
-      <c:if test="${creation}">
-        <input type="submit" class="btn btn-default" formaction="/journey/initialize" value="Créer"/>
-      </c:if>
-      <input type="submit" class="btn btn-default" formaction="/stopoff/search#result" formmethod="get"
-             value="Chercher"/>
+      <form:hidden path="status"/>
+      <input type="submit" class="btn btn-default" formaction="/stopoff/update" formmethod="post"
+             value="Mettre à jour" disabled="${unmodifiable}"/>
     </div>
 
     <script type="text/javascript">

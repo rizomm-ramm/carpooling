@@ -125,4 +125,15 @@ public class StopOffController {
         return mNv;
     }
 
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public ModelAndView updateStopoff(@ModelAttribute("stopOff") StopOff stopOff,
+                                      BindingResult bindingResult) {
+
+        ModelAndView mNv = new ModelAndView("stopoff/stopoff_edit");
+
+        mNv.addObject("stopOff", stopOff);
+
+        return mNv;
+    }
+
 }
