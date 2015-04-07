@@ -1,7 +1,6 @@
 package fr.rizomm.ramm.repositories;
 
 import fr.rizomm.ramm.model.Notification;
-import fr.rizomm.ramm.model.StopOff;
 import fr.rizomm.ramm.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 

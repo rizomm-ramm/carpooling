@@ -1,7 +1,6 @@
 package fr.rizomm.ramm.service;
 
 
-import fr.rizomm.ramm.model.StopOffPoint;
 import fr.rizomm.ramm.model.StopOffReservation;
 import fr.rizomm.ramm.model.StopOffReservationId;
 

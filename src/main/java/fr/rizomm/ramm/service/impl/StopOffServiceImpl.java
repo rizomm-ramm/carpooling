@@ -116,14 +116,13 @@ public class StopOffServiceImpl implements StopOffService {
         Map<Double, StopOff> matchingStopOffWithDistance = new TreeMap<>();
 
         stopOffs.forEach(stopOff -> {
-            Double distanceToDeparture = geoService.calculateDistance(stopOff.getDeparturePoint().getLatitude(), stopOff.getDeparturePoint().getLongitude(),
-                    lat, lng);
-
-            if (distanceToDeparture <= distanceMax) {
-                matchingStopOffWithDistance.put(distanceToDeparture, stopOff);
-            }
-
-        });
+                Double distanceToDeparture = geoService.calculateDistance(stopOff.getDeparturePoint().getLatitude(),
+                        stopOff.getDeparturePoint().getLongitude(),
+                        lat, lng);
+                if (distanceToDeparture <= distanceMax) {
+                    matchingStopOffWithDistance.put(distanceToDeparture, stopOff);
+                }
+            });
 
         return matchingStopOffWithDistance;
     }
@@ -135,25 +134,29 @@ public class StopOffServiceImpl implements StopOffService {
         Map<StopOffDistance, StopOff> matchingStopOffWithDistance = new TreeMap<>();
 
         stopOffs.forEach(stopOff -> {
-            if(stopOff.getDeparturePoint().getDate().compareTo(journeyForm.getDate()) != -1) {
+                if(stopOff.getDeparturePoint().getDate().compareTo(journeyForm.getDate()) != -1) {
 
-                Double distanceToDeparture = geoService.calculateDistance(stopOff.getDeparturePoint().getLatitude(), stopOff.getDeparturePoint().getLongitude(),
-                        journeyForm.getDeparture().getLatitude(), journeyForm.getDeparture().getLongitude());
+                    Double distanceToDeparture = geoService.calculateDistance(stopOff.getDeparturePoint().getLatitude(),
+                            stopOff.getDeparturePoint().getLongitude(),
+                            journeyForm.getDeparture().getLatitude(),
+                            journeyForm.getDeparture().getLongitude());
 
-                Double distanceToArrival = geoService.calculateDistance(stopOff.getArrivalPoint().getLatitude(), stopOff.getArrivalPoint().getLongitude(),
-                        journeyForm.getArrival().getLatitude(), journeyForm.getArrival().getLongitude());
+                    Double distanceToArrival = geoService.calculateDistance(stopOff.getArrivalPoint().getLatitude(),
+                            stopOff.getArrivalPoint().getLongitude(),
+                            journeyForm.getArrival().getLatitude(),
+                            journeyForm.getArrival().getLongitude());
 
-                // Convert precision to meters
-                if (distanceToDeparture <= (journeyForm.getDeparture().getPrecision() * 1000)
-                        && distanceToArrival <= (journeyForm.getArrival().getPrecision() * 1000)) {
-                    matchingStopOffWithDistance.put(StopOffDistance.builder()
-                                    .departureDistance(distanceToDeparture)
-                                    .arrivalDistance(distanceToArrival)
-                                    .build(),
-                            stopOff);
+                    // Convert precision to meters
+                    if (distanceToDeparture <= (journeyForm.getDeparture().getPrecision() * 1000)
+                            && distanceToArrival <= (journeyForm.getArrival().getPrecision() * 1000)) {
+                        matchingStopOffWithDistance.put(StopOffDistance.builder()
+                                        .departureDistance(distanceToDeparture)
+                                        .arrivalDistance(distanceToArrival)
+                                        .build(),
+                                stopOff);
+                    }
                 }
-            }
-        });
+            });
 
         List<Map.Entry<StopOffDistance, StopOff>> list = new LinkedList<>(matchingStopOffWithDistance.entrySet());
         Collections.sort(list, (o1, o2) ->
@@ -199,7 +202,10 @@ public class StopOffServiceImpl implements StopOffService {
     }
 
     @Override
-    public StopOffReservation changeReservationStatus(Long stopOffId, String passengerId, String loggedUser, StopOffReservation.Status status) {
+    public StopOffReservation changeReservationStatus(Long stopOffId,
+                                                      String passengerId,
+                                                      String loggedUser,
+                                                      StopOffReservation.Status status) {
         StopOff stopOff = getOne(stopOffId);
 
         if(!stopOff.getJourney().getUser().getUsername().equals(loggedUser)) {

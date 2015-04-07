@@ -5,14 +5,11 @@ import fr.rizomm.ramm.form.SimpleJourneyForm;
 import fr.rizomm.ramm.model.StopOff;
 import fr.rizomm.ramm.model.StopOffDistance;
 import fr.rizomm.ramm.model.StopOffReservation;
-import fr.rizomm.ramm.service.JourneyService;
 import fr.rizomm.ramm.service.StopOffService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,10 +17,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.view.RedirectView;
 
 import javax.validation.Valid;
-import javax.websocket.server.PathParam;
 import java.security.Principal;
 import java.util.Collections;
 import java.util.Map;
@@ -99,7 +94,8 @@ public class StopOffController {
             return "redirect:/stopoff/item/"+bookSeatForm.getStopOffId();
         } else {
             StopOffReservation reservation = stopOffService.book(bookSeatForm, principal.getName());
-            redirectAttributes.addFlashAttribute("notifications", Collections.singletonList("Demande enregistrée, en attente de validation du conducteur"));
+            redirectAttributes.addFlashAttribute("notifications",
+                    Collections.singletonList("Demande enregistrée, en attente de validation du conducteur"));
 
             return "redirect:/profile/journeys?type=passenger&passengerStoffOffid="+reservation.getStopOff().getJourney().getId();
         }
@@ -113,7 +109,8 @@ public class StopOffController {
                              final RedirectAttributes redirectAttributes) {
         StopOffReservation reservation = stopOffService.changeReservationStatus(stopOffId, username, principal.getName(), status);
 
-        redirectAttributes.addFlashAttribute("notifications", Collections.singletonList("Changement de statut de l'utilisateur " + username + " effectué."));
+        redirectAttributes.addFlashAttribute("notifications",
+                Collections.singletonList("Changement de statut de l'utilisateur " + username + " effectué."));
 
         return "redirect:/profile/journeys?type=driver&driverStoffOffid="+reservation.getStopOff().getJourney().getId();
     }

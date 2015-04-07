@@ -1,11 +1,8 @@
 package fr.rizomm.ramm.service.impl;
 
-import fr.rizomm.ramm.model.StopOffPoint;
 import fr.rizomm.ramm.model.StopOffReservation;
 import fr.rizomm.ramm.model.StopOffReservationId;
-import fr.rizomm.ramm.repositories.StopOffPointRepository;
 import fr.rizomm.ramm.repositories.StopOffReservationRepository;
-import fr.rizomm.ramm.service.StopOffPointService;
 import fr.rizomm.ramm.service.StopOffReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

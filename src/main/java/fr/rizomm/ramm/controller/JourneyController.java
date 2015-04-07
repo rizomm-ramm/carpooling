@@ -19,7 +19,6 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import javax.validation.Valid;
 import java.security.Principal;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -47,8 +46,7 @@ public class JourneyController {
             log.warn("Unable to update the backlog, there are some errors [{}]", results.getAllErrors());
             mNv.addAllObjects(results.getModel());
 
-        }
-        else {
+        } else {
             log.info("New journey to create [{}]", simpleJourneyForm);
             try {
                 Journey journey = journeyService.createJourney(simpleJourneyForm, principal.getName());

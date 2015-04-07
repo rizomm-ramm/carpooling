@@ -60,9 +60,9 @@ public class NotificationServiceImpl implements NotificationService {
     public void setAllReadNotifications(String username) {
 
         getUnreadNotifications(username).forEach(notification -> {
-            notification.setStatus(Notification.Status.READ);
-            notificationRepository.saveAndFlush(notification);
-        });
+                notification.setStatus(Notification.Status.READ);
+                notificationRepository.saveAndFlush(notification);
+            });
     }
 
     @Override
