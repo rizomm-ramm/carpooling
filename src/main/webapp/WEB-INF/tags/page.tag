@@ -4,6 +4,7 @@
 <%@tag description="Overall Page template" pageEncoding="UTF-8" %>
 <%@attribute name="title" required="true" %>
 <%@attribute name="notifications" type="java.util.List" %>
+<%@attribute name="errors" type="java.util.List" %>
 <%@attribute name="scripts" fragment="true" %>
 <!DOCTYPE html>
 <html lang="fr">
@@ -82,6 +83,16 @@
             </nav>
         </div>
 
+        <c:if test="${errors.size() > 0}">
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <ul>
+                    <c:forEach items="${errors}" var="error">
+                        <li>${error}</li>
+                    </c:forEach>
+                </ul>
+            </div>
+        </c:if>
         <c:if test="${notifications.size() > 0}">
             <div class="alert alert-info alert-dismissible" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>

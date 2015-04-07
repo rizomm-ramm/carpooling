@@ -3,8 +3,10 @@ package fr.rizomm.ramm.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Builder;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,6 +23,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@EqualsAndHashCode(exclude = "stopOffs")
 @Table(name = "stopoff_point")
 @Entity
 public class StopOffPoint {
@@ -44,6 +47,7 @@ public class StopOffPoint {
     private String address;
 
     @Column(name = "date", nullable = false)
+    @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
     private Date date;
 
     @Column(name = "description", nullable = true)

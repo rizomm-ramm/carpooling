@@ -2,6 +2,7 @@ package fr.rizomm.ramm.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.Builder;
@@ -23,6 +24,7 @@ import java.util.List;
 @AllArgsConstructor
 @ToString(exclude = "stopOffs")
 @Builder
+@EqualsAndHashCode(of = "id")
 @Entity(name = "journeys")
 public class Journey {
 

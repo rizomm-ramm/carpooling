@@ -20,7 +20,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -32,6 +34,29 @@ import java.util.Map;
 public class StopOffController {
 
     private final StopOffService stopOffService;
+
+    private ModelAndView processStopOff(@Valid @ModelAttribute("stopOff") StopOff stopOff,
+                                        BindingResult bindingResult,
+                                        List<String> errors,
+                                        List<String> notifications) {
+        ModelAndView mNv = new ModelAndView("stopoff/stopoff_edit");
+
+        if(bindingResult.hasErrors()) {
+            errors.add("Impossible de mettre à jour le trajet");
+        } else {
+            try {
+                stopOffService.updateStopOff(stopOff);
+                notifications.add("Trajet mis à jour.");
+            } catch (Exception e) {
+                log.warn("Impossible de mettre à jour le trajet", e);
+
+                errors.add(e.getMessage());
+            }
+        }
+
+        mNv.addAllObjects(bindingResult.getModel());
+        return mNv;
+    }
 
     @Autowired
     public StopOffController(StopOffService stopOffService) {
@@ -126,14 +151,35 @@ public class StopOffController {
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public ModelAndView updateStopoff(@ModelAttribute("stopOff") StopOff stopOff,
-                                      BindingResult bindingResult) {
+    public ModelAndView updateStopoff(@Valid @ModelAttribute("stopOff") StopOff stopOff,
+                                      BindingResult bindingResult) throws Exception {
 
-        ModelAndView mNv = new ModelAndView("stopoff/stopoff_edit");
+        ArrayList<String> errors = new ArrayList<>();
+        ArrayList<String> notifications = new ArrayList<>();
+        ModelAndView modelAndView = processStopOff(stopOff, bindingResult, errors, notifications);
+        modelAndView.addObject("errors", errors);
+        modelAndView.addObject("notifications", notifications);
+        return modelAndView;
+    }
 
-        mNv.addObject("stopOff", stopOff);
+    @RequestMapping(value = "/validate", method = RequestMethod.POST)
+    public ModelAndView validateStopoff(@Valid @ModelAttribute("stopOff") StopOff stopOff,
+                                      BindingResult bindingResult) throws Exception {
 
-        return mNv;
+        ArrayList<String> errors = new ArrayList<>();
+        ArrayList<String> notifications = new ArrayList<>();
+
+        if(stopOff.getPrice() > 0 && stopOff.getAvailableSeats() > 0) {
+            stopOff.setStatus(StopOff.Status.ACTIVATED);
+            notifications.add("Statut du trajet mis à jour");
+        } else  {
+            errors.add("Le prix ou le nombre de place disponible est inférieur ou égal à 0");
+        }
+
+        ModelAndView modelAndView = processStopOff(stopOff, bindingResult, errors, notifications);
+        modelAndView.addObject("errors", errors);
+        modelAndView.addObject("notifications", notifications);
+        return modelAndView;
     }
 
 }

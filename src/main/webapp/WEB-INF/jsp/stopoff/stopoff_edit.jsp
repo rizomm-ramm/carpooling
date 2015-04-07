@@ -4,7 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<t:page title="Profil - Edition" notifications="${notifications}">
+<t:page title="Profil - Edition" notifications="${notifications}" errors="${errors}">
 
   <fmt:formatDate pattern="MM/dd/yyyy HH:mm" value="<%=new java.util.Date()%>" var="nowDate"/>
   <c:set var="date" value="<%=new java.util.Date()%>"/>
@@ -18,6 +18,10 @@
   <fmt:formatDate pattern="MM/dd/yyyy HH:mm" value="${date}" var="formattedJourneyDate"/>
   <fmt:formatDate pattern="dd/MM/yyyy HH:mm" value="${stopOff.departurePoint.date}" var="departureDate"/>
   <fmt:formatDate pattern="dd/MM/yyyy HH:mm" value="${stopOff.arrivalPoint.date}" var="arrivalDate"/>
+
+  <a href="/profile/journeys?type=driver&driverStoffOffid=${stopOff.journey.id}" class="btn btn-default" style="margin: 15px;">
+    <span class="glyphicon glyphicon-arrow-left"></span> Retour à la liste
+  </a>
 
   <c:set var="unmodifiable" value="false" />
   <c:choose>
@@ -35,7 +39,7 @@
         </p>
       </div>
     </c:when>
-    <c:when test="${stopOff.reservations.size() == 0}">
+    <c:when test="${stopOff.status != 'INITIALIZED' && (empty stopOff.reservations || stopOff.reservations.size() == 0)}">
       <div class="alert alert-warning alert-dismissible" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <strong>Ce trajet est activé, mais aucune resérvation n'a été effectuée!</strong>
@@ -153,7 +157,13 @@
         </div>
         <div class="form-group text-center">
           <form:hidden path="status"/>
+          <form:hidden path="id"/>
+          <form:hidden path="journey.id"/>
 
+          <c:if test="${stopOff.status == 'INITIALIZED'}">
+            <input type="submit" class="btn btn-default" formaction="/stopoff/validate" formmethod="post"
+                   value="Valider le trajet" <c:if test="${unmodifiable}">disabled="disabled"</c:if>/>
+          </c:if>
           <input type="submit" class="btn btn-default" formaction="/stopoff/update" formmethod="post"
                  value="Mettre à jour" <c:if test="${unmodifiable}">disabled="disabled"</c:if>/>
         </div>

@@ -21,6 +21,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
+import javax.validation.constraints.Min;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -29,7 +30,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 @AllArgsConstructor
 @ToString(exclude = {"reservations"})
 @Builder
-@EqualsAndHashCode(of = {"id"})
+@EqualsAndHashCode(exclude = {"reservations", "distance"})
 @Entity(name = "stopoff")
 public class StopOff {
 
@@ -62,9 +63,11 @@ public class StopOff {
     private Set<StopOffReservation> reservations;
 
     @Column(name = "distance", nullable = false)
+    @Min(0)
     private Long distance;
 
     @Column(name = "available_seats", nullable = true)
+    @Min(0)
     private Integer availableSeats;
 
     @Column(name = "status", nullable = false)
@@ -72,6 +75,7 @@ public class StopOff {
     private Status status = Status.INITIALIZED;
 
     @Column(name = "price", nullable = true)
+    @Min(0)
     private Double price;
 
     @PreUpdate

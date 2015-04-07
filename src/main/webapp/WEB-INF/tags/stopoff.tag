@@ -29,32 +29,15 @@
             <div class="col-md-2">
                 <span class="badge">
                 <span data-toggle="tooltip" data-placement="top"
-                      title="Nombre de places disponibles">
-                      <c:choose>
-                          <c:when test="${adminMode &&stopOff.status == 'INITIALIZED'}">
-                              <input type="text" value="${stopOff.availableSeats}" style="width: 40px; color: black; text-align: right;" />
-                          </c:when>
-                          <c:otherwise>
-                              ${stopOff.numberOfRemainingReservation()} / ${stopOff.availableSeats}
+                      title="Nombre de places disponibles">${stopOff.numberOfRemainingReservation()} / ${stopOff.availableSeats}</span>
 
-                              <c:if test="${not adminMode and stopOff.numberOfRemainingReservation() > 0 and stopOff.journey.user.username != loggedUser and not stopOff.isAlreadyRegistered(loggedUser)}">
-                                  <a href="#" data-toggle="modal" data-target="#register-modal-${stopOff.id}" data-remaining-reservations="${stopOff.numberOfRemainingReservation()}" data-stopoff-id="${stopOff.id}" style="color: white;">Réserver</a>
-                              </c:if>
-                          </c:otherwise>
-                      </c:choose>
-                </span>
+                <c:if test="${not adminMode and stopOff.numberOfRemainingReservation() > 0 and stopOff.journey.user.username != loggedUser and not stopOff.isAlreadyRegistered(loggedUser)}">
+                    <a href="#" data-toggle="modal" data-target="#register-modal-${stopOff.id}" data-remaining-reservations="${stopOff.numberOfRemainingReservation()}" data-stopoff-id="${stopOff.id}" style="color: white;">Réserver</a>
+                </c:if>
             </span>
                 |
             <span class="badge badge-default" data-toggle="tooltip" data-placement="top" title="Prix du trajet">
-                <c:choose>
-                    <c:when test="${adminMode &&stopOff.status == 'INITIALIZED'}">
-                        <input type="text" value="${stopOff.price}" style="width: 40px; color: black; text-align: right;" />
-                    </c:when>
-                    <c:otherwise>
-                        ${stopOff.price}
-                    </c:otherwise>
-                </c:choose>
-                &euro;
+                ${stopOff.price} &euro;
             </span>
             </div>
             <div class="col-md-8 text-center" style="font-size: 18px;">
@@ -80,7 +63,7 @@
         </div>
     </div>
     <div class="panel-body">
-        <c:if test="${adminMode}">
+        <c:if test="${adminMode && stopOff.status == 'INITIALIZED'}">
             <div class="alert alert-warning alert-dismissible" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <strong>Ce trajet n'est pas activé et n'apparaît donc pas dans la recherche!</strong>

@@ -105,6 +105,52 @@ public class StopOffServiceImpl implements StopOffService {
     }
 
     @Override
+    public StopOff updateStopOff(StopOff stopOffToUpdate) throws Exception {
+        StopOff original = stopOffRepository.getOne(stopOffToUpdate.getId());
+
+        if(stopOffToUpdate.getDeparturePoint().getDate().compareTo(stopOffToUpdate.getArrivalPoint().getDate()) > 0) {
+            throw new IllegalArgumentException("Arrivée prévue avant le départ!");
+        }
+
+        original.getDeparturePoint().setDate(stopOffToUpdate.getDeparturePoint().getDate());
+        original.getArrivalPoint().setDate(stopOffToUpdate.getArrivalPoint().getDate());
+
+        if(!original.getDeparturePoint().getAddress().equals(stopOffToUpdate.getDeparturePoint().getAddress())
+                || !original.getArrivalPoint().getAddress().equals(stopOffToUpdate.getArrivalPoint().getAddress())) {
+            DistanceMatrix distance = geoService.distance(stopOffToUpdate.getDeparturePoint().getAddress(),
+                    stopOffToUpdate.getArrivalPoint().getAddress());
+
+            Long minDistance = null;
+
+            // Search for the minimum distance
+            for (DistanceMatrixRow row : distance.rows) {
+                for (DistanceMatrixElement element : row.elements) {
+                    if(element.status.equals(DistanceMatrixElementStatus.OK)) {
+                        if(minDistance == null || minDistance > element.distance.inMeters) {
+                            minDistance = element.distance.inMeters;
+                        }
+                    }
+                }
+            }
+
+            checkNotNull(minDistance, "Distance has not been found");
+
+            original.setDistance(minDistance);
+
+            original.getDeparturePoint().setAddress(stopOffToUpdate.getDeparturePoint().getAddress());
+            original.getArrivalPoint().setAddress(stopOffToUpdate.getArrivalPoint().getAddress());
+        }
+
+        original.setPrice(stopOffToUpdate.getPrice());
+        original.setAvailableSeats(stopOffToUpdate.getAvailableSeats());
+        original.getDeparturePoint().setDescription(stopOffToUpdate.getDeparturePoint().getDescription());
+        original.getArrivalPoint().setDescription(stopOffToUpdate.getArrivalPoint().getDescription());
+        original.setStatus(stopOffToUpdate.getStatus());
+
+        return stopOffRepository.saveAndFlush(original);
+    }
+
+    @Override
     public StopOff getOne(Long id) {
         return stopOffRepository.getOne(id);
     }

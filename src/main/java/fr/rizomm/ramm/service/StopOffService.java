@@ -22,6 +22,8 @@ public interface StopOffService {
 
     StopOff createStopOff(Journey journey, StopOffPoint departure, StopOffPoint arrival) throws Exception;
 
+    StopOff updateStopOff(StopOff stopOffToUpdate) throws Exception;
+
     StopOff getOne(Long id);
 
     Map<Double, StopOff> findStopOffByLocation(double lat, double lng, double distanceMax);
