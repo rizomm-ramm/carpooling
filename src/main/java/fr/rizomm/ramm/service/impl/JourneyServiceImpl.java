@@ -46,6 +46,7 @@ public class JourneyServiceImpl implements JourneyService {
                 .address(departureAddress.getAddress())
                 .latitude(departureAddress.getLatitude())
                 .longitude(departureAddress.getLongitude())
+                .date(form.getDate())
                 .build();
 
         SimpleJourneyForm.Address arrivalAddress = form.getArrival();

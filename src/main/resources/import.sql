@@ -32,8 +32,3 @@ insert into stopoff_reservations (username, stopoff_id, payed, status, seats) VA
 insert into stopoff_reservations (username, stopoff_id, payed, status, seats) VALUES('robin', 2, false, 'WAITING', 2);
 insert into stopoff_reservations (username, stopoff_id, payed, status, seats) VALUES('robin', 1, false, 'WAITING', 2);
 
-insert into notifications (user_id, status, type, message, date, link) VALUES('akraxx', 'UNREAD', 'SUCCESS', 'Test success', '2015-04-06 10:00:00', '');
-insert into notifications (user_id, status, type, message, date, link) VALUES('akraxx', 'READ', 'DANGER', 'Test danger', '2015-04-06 10:10:00', '');
-insert into notifications (user_id, status, type, message, date, link) VALUES('akraxx', 'UNREAD', 'INFO', 'Test info', '2015-04-06 10:20:00', '');
-insert into notifications (user_id, status, type, message, date, link) VALUES('akraxx', 'READ', 'DEFAULT', 'Test default', '2015-04-06 10:30:00', '');
-insert into notifications (user_id, status, type, message, date, link) VALUES('akraxx', 'UNREAD', 'WARNING', 'Test warning', '2015-04-06 10:40:00', '');

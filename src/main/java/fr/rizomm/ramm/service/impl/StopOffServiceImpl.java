@@ -27,6 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -76,6 +77,7 @@ public class StopOffServiceImpl implements StopOffService {
         DistanceMatrix distance = geoService.distance(departure.getAddress(), arrival.getAddress());
 
         Long minDistance = null;
+        Long duration = null;
 
         // Search for the minimum distance
         for (DistanceMatrixRow row : distance.rows) {
@@ -83,18 +85,24 @@ public class StopOffServiceImpl implements StopOffService {
                 if(element.status.equals(DistanceMatrixElementStatus.OK)) {
                     if(minDistance == null || minDistance > element.distance.inMeters) {
                         minDistance = element.distance.inMeters;
+                        duration = element.duration.inSeconds;
                     }
                 }
             }
         }
 
         checkNotNull(minDistance, "Distance has not been found");
+        checkNotNull(duration, "Duration has not been found");
+
+        arrival.setDate(new Date(departure.getDate().getTime() + (duration * 1000)));
 
         StopOff stopOff = StopOff.builder()
                 .departurePoint(departure)
                 .arrivalPoint(arrival)
                 .journey(journey)
                 .distance(minDistance)
+                .availableSeats(0)
+                .price(0D)
                 .build();
 
         return stopOffRepository.saveAndFlush(stopOff);
