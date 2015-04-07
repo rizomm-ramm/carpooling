@@ -28,7 +28,7 @@
                     <i>Vous n'avez créé aucun trajet.</i>
                 </c:if>
                 <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                    <c:forEach items="${user.journeys}" var="journey" varStatus="status">
+                    <c:forEach items="${user.getSortedJourneys()}" var="journey" varStatus="status">
                         <div class="panel panel-default" >
                             <div class="panel-heading" role="tab" id="journey-head-${status.index}">
                                 <div class="row panel-title" role="button" data-toggle="collapse" data-parent="#accordion" href="#journey-${status.index}"

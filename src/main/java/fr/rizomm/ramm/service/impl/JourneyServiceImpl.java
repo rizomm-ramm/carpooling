@@ -36,10 +36,10 @@ public class JourneyServiceImpl implements JourneyService {
     }
 
     @Override
-    public void createJourney(SimpleJourneyForm form, String username) throws Exception {
+    public Journey createJourney(SimpleJourneyForm form, String username) throws Exception {
         User user = userService.getOne(username);
 
-        Journey journey = Journey.builder().user(user).status(Journey.Status.INITIALIZED).build();
+        Journey journey = Journey.builder().user(user).build();
 
         SimpleJourneyForm.Address departureAddress = form.getDeparture();
         StopOffPoint departurePoint = StopOffPoint.builder()
@@ -57,6 +57,8 @@ public class JourneyServiceImpl implements JourneyService {
                 .build();
 
         stopOffService.createStopOff(journey, departurePoint, arrivalPoint);
+
+        return journey;
     }
 
     @Override

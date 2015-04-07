@@ -83,7 +83,8 @@
         </div>
 
         <c:if test="${notifications.size() > 0}">
-            <div class="alert alert-info" role="alert">
+            <div class="alert alert-info alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <ul>
                     <c:forEach items="${notifications}" var="notification">
                         <li>${notification}</li>

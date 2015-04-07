@@ -12,7 +12,7 @@ import java.util.List;
 public interface JourneyService {
     List<Journey> findAll();
 
-    void createJourney(SimpleJourneyForm form, String username) throws Exception;
+    Journey createJourney(SimpleJourneyForm form, String username) throws Exception;
 
     Journey getOne(Long id);
 }

@@ -58,6 +58,13 @@ public class User {
     @JsonIgnore
     private List<Notification> notifications;
 
+    public List<Journey> getSortedJourneys() {
+        return journeys
+                .stream()
+                .sorted((j1, j2) -> j2.getStopOffs().get(0).getDeparturePoint().getDate().compareTo(j1.getStopOffs().get(0).getDeparturePoint().getDate()))
+                .collect(Collectors.toList());
+    }
+
     public List<StopOffReservation> getActiveReservations() {
         Date now = new Date();
         return stopOffReservations

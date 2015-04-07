@@ -29,13 +29,6 @@ import java.util.List;
 @Entity(name = "journeys")
 public class Journey {
 
-    public enum Status {
-        INITIALIZED,
-        ACTIVATED,
-        CANCELED,
-        DONE
-    }
-
     @Id
     @GeneratedValue
     private Long id;
@@ -46,9 +39,5 @@ public class Journey {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "journey")
     private List<StopOff> stopOffs;
-
-    @Column(name = "status", nullable = false)
-    @Enumerated(EnumType.STRING)
-    private Status status = Status.INITIALIZED;
 
 }

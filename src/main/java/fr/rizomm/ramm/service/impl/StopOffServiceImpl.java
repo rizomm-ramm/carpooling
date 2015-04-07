@@ -24,18 +24,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -103,6 +98,7 @@ public class StopOffServiceImpl implements StopOffService {
                 .distance(minDistance)
                 .availableSeats(0)
                 .price(0D)
+                .status(StopOff.Status.INITIALIZED)
                 .build();
 
         return stopOffRepository.saveAndFlush(stopOff);
@@ -115,7 +111,7 @@ public class StopOffServiceImpl implements StopOffService {
 
     @Override
     public Map<Double, StopOff> findStopOffByLocation(double lat, double lng, double distanceMax) {
-        List<StopOff> stopOffs = findAll();
+        List<StopOff> stopOffs = stopOffRepository.findByStatus(StopOff.Status.ACTIVATED);
 
         Map<Double, StopOff> matchingStopOffWithDistance = new TreeMap<>();
 
@@ -134,7 +130,7 @@ public class StopOffServiceImpl implements StopOffService {
 
     @Override
     public Map<StopOffDistance, StopOff> findStopOffByLocation(SimpleJourneyForm journeyForm) {
-        List<StopOff> stopOffs = findAll();
+        List<StopOff> stopOffs = stopOffRepository.findByStatus(StopOff.Status.ACTIVATED);
 
         Map<StopOffDistance, StopOff> matchingStopOffWithDistance = new TreeMap<>();
 

@@ -7,10 +7,13 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.Builder;
+import org.omg.CORBA.INITIALIZE;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -34,6 +37,14 @@ import java.util.stream.Collectors;
 @EqualsAndHashCode(of = {"id"})
 @Entity(name = "stopoff")
 public class StopOff {
+
+    public enum Status {
+        INITIALIZED,
+        ACTIVATED,
+        CANCELLED,
+        DONE
+    }
+
     @Id
     @GeneratedValue
     private Long id;
@@ -60,6 +71,10 @@ public class StopOff {
 
     @Column(name = "available_seats", nullable = true)
     private Integer availableSeats;
+
+    @Column(name = "status", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Status status = Status.INITIALIZED;
 
     @Column(name = "price", nullable = true)
     private Double price;

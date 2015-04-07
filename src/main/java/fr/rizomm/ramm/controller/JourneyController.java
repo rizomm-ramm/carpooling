@@ -1,6 +1,8 @@
 package fr.rizomm.ramm.controller;
 
+import com.google.common.collect.ImmutableList;
 import fr.rizomm.ramm.form.SimpleJourneyForm;
+import fr.rizomm.ramm.model.Journey;
 import fr.rizomm.ramm.service.JourneyService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +14,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Created by Maximilien on 20/03/2015.
@@ -33,7 +38,10 @@ public class JourneyController {
     }
 
     @RequestMapping(value = "/initialize", method = RequestMethod.POST)
-    public ModelAndView initializeJourney(@Valid @ModelAttribute("journeyForm") SimpleJourneyForm simpleJourneyForm, BindingResult results, Principal principal) {
+    public ModelAndView initializeJourney(@Valid @ModelAttribute("journeyForm") SimpleJourneyForm simpleJourneyForm,
+                                          BindingResult results,
+                                          Principal principal,
+                                          RedirectAttributes redirectAttributes) {
         ModelAndView mNv = new ModelAndView("index");
         if(results.hasErrors()) {
             log.warn("Unable to update the backlog, there are some errors [{}]", results.getAllErrors());
@@ -43,12 +51,20 @@ public class JourneyController {
         else {
             log.info("New journey to create [{}]", simpleJourneyForm);
             try {
-                journeyService.createJourney(simpleJourneyForm, principal.getName());
+                Journey journey = journeyService.createJourney(simpleJourneyForm, principal.getName());
+
+                List<String> notifications = ImmutableList.of("Votre trajet a été initialisé.",
+                        "Remplissez le nombre de places disponibles et le prix pour pouvoir l'activer",
+                        "Une fois activé, il apparaîtra dans la recherche");
+                redirectAttributes.addFlashAttribute("notifications", notifications);
+
+                String redirectUrl = String.format("/profile/journeys?type=driver&driverStoffOffid=%d", journey.getId());
+                mNv = new ModelAndView(new RedirectView(redirectUrl, true));
             } catch (Exception e) {
                 mNv.addAllObjects(results.getModel());
                 results.addError(new ObjectError("global", "Impossible de créer votre trajet"));
             }
-            mNv = new ModelAndView(new RedirectView("/", true));
+
         }
 
         return mNv;
