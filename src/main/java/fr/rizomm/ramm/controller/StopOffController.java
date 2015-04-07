@@ -10,6 +10,7 @@ import fr.rizomm.ramm.service.StopOffService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -22,6 +23,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.validation.Valid;
+import javax.websocket.server.PathParam;
 import java.security.Principal;
 import java.util.Collections;
 import java.util.Map;
@@ -115,4 +117,15 @@ public class StopOffController {
 
         return "redirect:/profile/journeys?type=driver&driverStoffOffid="+reservation.getStopOff().getJourney().getId();
     }
+
+    @RequestMapping(value = "/edit/{stopOffId}", method = RequestMethod.GET)
+    public ModelAndView editStopoff(@PathVariable("stopOffId") Long stopOffId) {
+
+        ModelAndView mNv = new ModelAndView("stopoff/stopoff_edit");
+
+        mNv.addObject("stopOff", stopOffService.getOne(stopOffId));
+
+        return mNv;
+    }
+
 }
