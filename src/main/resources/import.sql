@@ -13,14 +13,14 @@ insert into journeys(user_id) values('akraxx');
 insert into journeys(user_id) values('akraxx');
 insert into journeys(user_id) values('akraxx');
 
-insert into stopoff_point(latitude, longitude, address, description, type, date) values (3.04, 50.6, '36 Rue Paul Doumer, 59120 Loos, France', 'Simple description du point de rendez vous', 'DEPARTURE', '2015-03-07 14:15:00');
-insert into stopoff_point(latitude, longitude, address, description, type, date) values (3.0452, 50.6, '125 Rue du Capitaine Michel, 59120 Loos, France', 'Simple description du point de rendez vous a LOOS', 'ARRIVAL', '2015-03-07 14:30:00');
+insert into stopoff_point(latitude, longitude, address, description, type, date) values (3.04, 50.6, '36 Rue Paul Doumer, 59120 Loos, France', 'Pas de bagages', 'DEPARTURE', '2015-03-07 14:15:00');
+insert into stopoff_point(latitude, longitude, address, description, type, date) values (3.0452, 50.6, '125 Rue du Capitaine Michel, 59120 Loos, France', '', 'ARRIVAL', '2015-03-07 14:30:00');
 
 insert into stopoff_point(latitude, longitude, address, description, type, date) values (3.1620699999999715, 50.724993, 'Tourcoing, France', 'Simple description du point de rendez vous', 'DEPARTURE', '2015-05-04 15:15:00');
 insert into stopoff_point(latitude, longitude, address, description, type, date) values (3.151798099999951, 50.6656741, '52 Rue Marechal de Lattre de Tassigny, Croix, France', 'Simple description du point de rendez vous à Croix', 'ARRIVAL', '2015-05-04 15:30:00');
 
-insert into stopoff_point(latitude, longitude, address, description, type, date) values (2.307314099999985, 48.8657844, 'Paris, France', 'Simple description du point de rendez vous', 'DEPARTURE', '2015-05-05 08:00:00');
-insert into stopoff_point(latitude, longitude, address, description, type, date) values (-3.7037901999999576, 40.4167754, 'Madrid, Espagne', 'Simple description du point de rendez vous à Croix', 'ARRIVAL', '2015-05-06 00:00:00');
+insert into stopoff_point(latitude, longitude, address, description, type, date) values (2.307314099999985, 48.8657844, 'Paris, France', 'Depart de roissy', 'DEPARTURE', '2015-05-05 08:00:00');
+insert into stopoff_point(latitude, longitude, address, description, type, date) values (-3.7037901999999576, 40.4167754, 'Madrid, Espagne', 'Arrivée à bernabeu', 'ARRIVAL', '2015-05-06 00:00:00');
 
 insert into stopoff(journey_id, departure_point_id, arrival_point_id, distance, available_seats, price, status) values (0, 0, 1, 6520, 4, 3, 'ACTIVATED');
 insert into stopoff(journey_id, departure_point_id, arrival_point_id, distance, available_seats, price, status) values (1, 2, 3, 9222, 2, 5, 'ACTIVATED');
