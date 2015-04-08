@@ -37,7 +37,7 @@
                     cssClass="col-sm-2 control-label">Départ :</form:label>
         <div class="col-sm-10">
             <form:input cssClass="form-control" path="departure.address" onfocus="geolocate()" id="departure"
-                        placeholder="Addresse de départ"/>
+                        placeholder="Adresse de départ"/>
 
             <c:if test="${not creation}">
                 <div class="row" style="padding: 10px">
@@ -63,7 +63,7 @@
         <form:label path="arrival.address" id="arrival_label" cssClass="col-sm-2 control-label">Arrivée :</form:label>
         <div class="col-sm-10">
             <form:input cssClass="form-control" path="arrival.address" onfocus="geolocate()" id="arrival"
-                        placeholder="Addresse d'arrivée"/>
+                        placeholder="Adresse d'arrivée"/>
 
             <c:if test="${not creation}">
                 <div class="row" style="padding: 10px">
