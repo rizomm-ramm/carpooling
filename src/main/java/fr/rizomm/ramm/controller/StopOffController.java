@@ -140,6 +140,20 @@ public class StopOffController {
         return "redirect:/profile/journeys?type=driver&driverStoffOffid="+reservation.getStopOff().getJourney().getId();
     }
 
+    @RequestMapping(value = "/status/paiement", method = RequestMethod.GET)
+    public String statusPaiement(@RequestParam("stopOffId") Long stopOffId,
+                             @RequestParam("passengerId") String username,
+                             @RequestParam("status") StopOffReservation.Status status,
+                             Principal principal,
+                             final RedirectAttributes redirectAttributes) {
+        StopOffReservation reservation = stopOffService.changePaiementStatus(stopOffId, username, principal.getName(), status);
+
+        redirectAttributes.addFlashAttribute("notifications",
+                Collections.singletonList("Changement de statut du paiement par l'utilisateur " + username + " effectué."));
+
+        return "redirect:/profile/journeys?type=driver&driverStoffOffid="+reservation.getStopOff().getJourney().getId();
+    }
+
     @RequestMapping(value = "/edit/{stopOffId}", method = RequestMethod.GET)
     public ModelAndView editStopoff(@PathVariable("stopOffId") Long stopOffId) {
 

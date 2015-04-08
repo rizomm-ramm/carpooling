@@ -283,4 +283,35 @@ public class StopOffServiceImpl implements StopOffService {
         return stopOffReservationService.saveAndFlush(reservation);
     }
 
+    public StopOffReservation changePaiementStatus(Long stopOffId,
+										           String passengerId,
+										           String loggedUser,
+										           StopOffReservation.Status status){
+    	StopOff stopOff = getOne(stopOffId);
+
+        if(!stopOff.getJourney().getUser().getUsername().equals(loggedUser)) {
+            throw new IllegalStateException("Vous n'avez pas créé ce trajet.");
+        }
+
+        User passenger = userService.getOne(passengerId);
+
+        StopOffReservation reservation = stopOffReservationService.getOne(new StopOffReservationId(stopOff, passenger));
+
+        if(!StopOffReservation.Status.WAITING.equals(reservation.getStatus())) {
+            throw new IllegalStateException("Le statut de la réservation n'est plus en attente et ne peut plus �tre modifi�");
+        }
+
+        if(StopOffReservation.Status.VALIDATED.equals(status)) {
+            reservation.setPayed(true);
+
+            String notificationMessage = loggedUser + " a %s votre paiement pour le trajet <br /> "
+                    + stopOff.getDeparturePoint().getAddress() + " - " + stopOff.getArrivalPoint().getAddress();
+
+            String link = String.format("/profile/journeys?type=passenger&passengerStoffOffid=%d", + stopOff.getJourney().getId());
+
+            notificationService.saveAndFlush(String.format(notificationMessage, "validé"), Notification.Type.SUCCESS, passengerId, link);
+        }
+
+        return stopOffReservationService.saveAndFlush(reservation);
+    }
 }

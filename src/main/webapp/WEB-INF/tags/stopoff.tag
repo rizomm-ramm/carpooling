@@ -139,7 +139,17 @@
                                                 <span class="glyphicon glyphicon-ok"></span>
                                             </c:when>
                                             <c:otherwise>
-                                                <span class="glyphicon glyphicon-remove"></span>
+                                             <a class="link-popover glyphicon glyphicon-remove"
+                                                      data-toggle="popover"
+                                                      title="Confirmer le paiement"
+                                                      data-html="true"
+                                                      data-placement="top"
+                                                      role="button"
+                                                      data-content="<center>
+                                                            <a href='/stopoff/status/paiement?stopOffId=${stopOff.id}&passengerId=${reservations.user.username}&status=VALIDATED'>
+                                                                <span class='glyphicon glyphicon-ok' title='Valider'></span>
+                                                            </a>
+                                                            </center>"></a>
                                             </c:otherwise>
                                         </c:choose>
                                     </td>
