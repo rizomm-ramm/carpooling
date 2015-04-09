@@ -4,7 +4,6 @@ import com.google.common.collect.ImmutableList;
 import fr.rizomm.ramm.model.Notification;
 import fr.rizomm.ramm.model.User;
 import fr.rizomm.ramm.repositories.NotificationRepository;
-import fr.rizomm.ramm.service.NotificationService;
 import fr.rizomm.ramm.service.UserService;
 import org.junit.After;
 import org.junit.Before;
