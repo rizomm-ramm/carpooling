@@ -13,7 +13,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import java.util.List;
 
 import static org.hamcrest.Matchers.hasItems;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;

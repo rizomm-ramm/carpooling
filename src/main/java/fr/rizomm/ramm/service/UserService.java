@@ -12,4 +12,8 @@ public interface UserService {
     List<User> findAll();
 
     User getOne(String username);
+
+    User saveAndFlush(User user);
+
+    User register(String username, String password);
 }

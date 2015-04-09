@@ -36,7 +36,6 @@ public class User {
     private String username; //NOSONAR
 
     @Column(name = "password", nullable = false)
-    @JsonIgnore
     private String password; //NOSONAR
 
     @Column(name = "enabled", nullable = false)
@@ -46,7 +45,7 @@ public class User {
     @JsonIgnore
     private Set<StopOffReservation> stopOffReservations;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<UserRole> roles; //NOSONAR
 
     @OneToMany(mappedBy = "user")
@@ -57,6 +56,7 @@ public class User {
     @JsonIgnore
     private List<Notification> notifications; //NOSONAR
 
+    @JsonIgnore
     public List<Journey> getSortedJourneys() {
         return journeys
                 .stream()
@@ -65,6 +65,7 @@ public class User {
                 .collect(Collectors.toList());
     }
 
+    @JsonIgnore
     public List<StopOffReservation> getActiveReservations() {
         Date now = new Date();
         return stopOffReservations
@@ -74,6 +75,7 @@ public class User {
                 .collect(Collectors.toList());
     }
 
+    @JsonIgnore
     public List<StopOffReservation> getArchiveReservations() {
         Date now = new Date();
         return stopOffReservations

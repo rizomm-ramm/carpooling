@@ -10,12 +10,15 @@
     <form action="login" method="POST">
         <div class="form-group">
             <label for="j_username">Nom d'utilisateur</label>
-            <input type="text" class="form-control" id="j_username" name="j_username" placeholder="Nom d'utilisateur">
+            <input type="text" class="form-control" id="j_username" name="j_username" value="${j_username}" placeholder="Nom d'utilisateur">
         </div>
         <div class="form-group">
             <label for="j_password">Mot de passe</label>
-            <input type="password" class="form-control" id="j_password" name="j_password" placeholder="Mot de passe">
+            <input type="password" class="form-control" id="j_password" name="j_password" value="${j_password}" placeholder="Mot de passe">
         </div>
-        <button type="submit" class="btn btn-default">Connexion</button>
+        <input type="submit" class="btn btn-default" value="Connexion" formaction="/login" />
+        <c:if test="${empty j_username and empty j_password}">
+            <input type="submit" class="btn btn-default" value="S'enregistrer" formaction="/register" />
+        </c:if>
     </form>
 </t:page>

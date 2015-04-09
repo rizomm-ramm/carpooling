@@ -24,10 +24,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
             .authorizeRequests()
-                .antMatchers("/", "/stopoff/search", "/api/**", "/stopoff/item/**").permitAll()
+                .antMatchers("/", "/register", "/stopoff/search", "/api/**", "/stopoff/item/**").permitAll()
                 .anyRequest().authenticated()
                 .antMatchers("/admin/**").hasRole("ADMIN").anyRequest().authenticated()
-            .and().formLogin()
+            .and()
+                .formLogin()
                 .loginPage("/login")
                 .permitAll()
                 .usernameParameter("j_username")
@@ -46,6 +47,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+
         auth.jdbcAuthentication().dataSource(dataSource)
                 .usersByUsernameQuery("select username,password, enabled from users where username=?")
                 .authoritiesByUsernameQuery("select username, role from user_roles where username =?");

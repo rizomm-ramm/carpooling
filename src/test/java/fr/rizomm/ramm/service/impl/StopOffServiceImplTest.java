@@ -7,7 +7,6 @@ import com.google.maps.model.DistanceMatrixElement;
 import com.google.maps.model.DistanceMatrixElementStatus;
 import com.google.maps.model.DistanceMatrixRow;
 import com.google.maps.model.Duration;
-
 import fr.rizomm.ramm.model.Journey;
 import fr.rizomm.ramm.model.StopOff;
 import fr.rizomm.ramm.model.StopOff.Status;
@@ -17,7 +16,6 @@ import fr.rizomm.ramm.service.GeoService;
 import fr.rizomm.ramm.service.NotificationService;
 import fr.rizomm.ramm.service.StopOffReservationService;
 import fr.rizomm.ramm.service.UserService;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -33,7 +31,7 @@ import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
