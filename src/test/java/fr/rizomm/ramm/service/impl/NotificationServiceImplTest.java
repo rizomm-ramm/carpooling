@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableList;
 import fr.rizomm.ramm.model.Notification;
 import fr.rizomm.ramm.model.User;
 import fr.rizomm.ramm.repositories.NotificationRepository;
+import fr.rizomm.ramm.service.NotificationService;
 import fr.rizomm.ramm.service.UserService;
 import org.junit.After;
 import org.junit.Before;
@@ -145,7 +146,17 @@ public class NotificationServiceImplTest {
 
     @Test
     public void testSetAllReadNotifications() throws Exception {
+        notificationService = spy(notificationService);
+        doReturn(ImmutableList.of(notification1)).when(notificationService).getUnreadNotifications(user.getUsername());
+        when(userService.getOne(user.getUsername())).thenReturn(user);
 
+        notificationService.setAllReadNotifications(user.getUsername());
+
+        assertThat(notification1, allOf(
+                        hasProperty("status", is(Notification.Status.READ))
+                ));
+
+        verify(notificationRepository, times(1)).saveAndFlush(notification1);
     }
 
     @Test
