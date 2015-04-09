@@ -15,27 +15,27 @@ public class SimpleJourneyForm {
     @Data
     public class Address {
         @NotNull
-        private Double longitude;
+        private Double longitude; //NOSONAR
 
         @NotNull
-        private Double latitude;
+        private Double latitude; //NOSONAR
 
         @Min(0)
-        private int precision = 20;
+        private int precision = 20; //NOSONAR
 
         @NotNull
         @NotEmpty
-        private String address;
+        private String address; //NOSONAR
     }
 
     @Valid
-    private Address departure = new Address();
+    private Address departure = new Address(); //NOSONAR
 
     @Valid
-    private Address arrival = new Address();
+    private Address arrival = new Address(); //NOSONAR
 
     @NotNull
     @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
-    private Date date;
+    private Date date; //NOSONAR
 
 }

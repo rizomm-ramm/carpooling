@@ -59,6 +59,7 @@ public class JourneyController {
                 String redirectUrl = String.format("/profile/journeys?type=driver&driverStoffOffid=%d", journey.getId());
                 mNv = new ModelAndView(new RedirectView(redirectUrl, true));
             } catch (Exception e) {
+                log.warn("Unable to create the jouney {}", simpleJourneyForm, e);
                 mNv.addAllObjects(results.getModel());
                 results.addError(new ObjectError("global", "Impossible de créer votre trajet"));
             }

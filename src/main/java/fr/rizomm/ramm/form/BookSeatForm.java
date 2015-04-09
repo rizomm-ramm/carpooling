@@ -8,9 +8,9 @@ import javax.validation.constraints.Min;
 public class BookSeatForm {
 
     @Min(0)
-    private int seats;
+    private int seats; //NOSONAR
 
-    private long stopOffId;
+    private long stopOffId; //NOSONAR
 
-    private String comment;
+    private String comment; //NOSONAR
 }

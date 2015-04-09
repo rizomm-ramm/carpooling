@@ -39,26 +39,26 @@ public class Notification {
 
     @Id
     @GeneratedValue
-    private Long id;
+    private Long id; //NOSONAR
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User user;
+    private User user; //NOSONAR
 
     @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)
-    private Status status = Status.UNREAD;
+    private Status status = Status.UNREAD; //NOSONAR
 
     @Column(name = "type", nullable = false)
     @Enumerated(EnumType.STRING)
-    private Type type = Type.DEFAULT;
+    private Type type = Type.DEFAULT; //NOSONAR
 
     @Column(name = "message", nullable = false)
-    private String message;
+    private String message; //NOSONAR
 
     @Column(name = "date", nullable = false)
-    private Date date;
+    private Date date; //NOSONAR
 
     @Column(name = "link", nullable = true)
-    private String link;
+    private String link; //NOSONAR
 }

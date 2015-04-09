@@ -30,13 +30,13 @@ public class Journey {
 
     @Id
     @GeneratedValue
-    private Long id;
+    private Long id; //NOSONAR
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User user;
+    private User user; //NOSONAR
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "journey")
-    private List<StopOff> stopOffs;
+    private List<StopOff> stopOffs; //NOSONAR
 
 }

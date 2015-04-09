@@ -166,10 +166,10 @@ public class StopOffController {
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public ModelAndView updateStopoff(@Valid @ModelAttribute("stopOff") StopOff stopOff,
-                                      BindingResult bindingResult) throws Exception {
+                                      BindingResult bindingResult) throws IllegalStateException {
 
-        ArrayList<String> errors = new ArrayList<>();
-        ArrayList<String> notifications = new ArrayList<>();
+        List<String> errors = new ArrayList<>();
+        List<String> notifications = new ArrayList<>();
         ModelAndView modelAndView = processStopOff(stopOff, bindingResult, errors, notifications);
         modelAndView.addObject("errors", errors);
         modelAndView.addObject("notifications", notifications);
@@ -178,10 +178,10 @@ public class StopOffController {
 
     @RequestMapping(value = "/validate", method = RequestMethod.POST)
     public ModelAndView validateStopoff(@Valid @ModelAttribute("stopOff") StopOff stopOff,
-                                      BindingResult bindingResult) throws Exception {
+                                      BindingResult bindingResult) throws IllegalStateException {
 
-        ArrayList<String> errors = new ArrayList<>();
-        ArrayList<String> notifications = new ArrayList<>();
+        List<String> errors = new ArrayList<>();
+        List<String> notifications = new ArrayList<>();
 
         if(stopOff.getPrice() > 0 && stopOff.getAvailableSeats() > 0) {
             stopOff.setStatus(StopOff.Status.ACTIVATED);

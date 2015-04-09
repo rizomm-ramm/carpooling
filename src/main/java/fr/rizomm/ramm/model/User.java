@@ -33,29 +33,29 @@ public class User {
 
     @Id
     @Column(name = "username", unique = true, nullable = false)
-    private String username;
+    private String username; //NOSONAR
 
     @Column(name = "password", nullable = false)
     @JsonIgnore
-    private String password;
+    private String password; //NOSONAR
 
     @Column(name = "enabled", nullable = false)
-    private boolean enabled;
+    private boolean enabled; //NOSONAR
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.user", cascade = CascadeType.ALL)
     @JsonIgnore
     private Set<StopOffReservation> stopOffReservations;
 
     @OneToMany(mappedBy = "user")
-    private List<UserRole> roles;
+    private List<UserRole> roles; //NOSONAR
 
     @OneToMany(mappedBy = "user")
     @JsonIgnore
-    private List<Journey> journeys;
+    private List<Journey> journeys; //NOSONAR
 
     @OneToMany(mappedBy = "user")
     @JsonIgnore
-    private List<Notification> notifications;
+    private List<Notification> notifications; //NOSONAR
 
     public List<Journey> getSortedJourneys() {
         return journeys

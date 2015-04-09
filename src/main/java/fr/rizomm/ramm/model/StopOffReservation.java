@@ -44,20 +44,20 @@ public class StopOffReservation {
 
     @EmbeddedId
     @JsonIgnore
-    private StopOffReservationId pk;
+    private StopOffReservationId pk; //NOSONAR
 
     @Column(name = "seats", nullable = false)
-    private int seats = 1;
+    private int seats = 1; //NOSONAR
 
     @Column(name = "payed", nullable = true)
-    private boolean payed = false;
+    private boolean payed = false; //NOSONAR
 
     @Column(name = "comment", nullable = true)
-    private String comment = "";
+    private String comment = ""; //NOSONAR
 
     @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)
-    private Status status = Status.WAITING;
+    private Status status = Status.WAITING; //NOSONAR
 
     @Transient
     public StopOff getStopOff() {

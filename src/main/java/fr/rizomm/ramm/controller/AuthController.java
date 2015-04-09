@@ -14,6 +14,7 @@ import java.security.Principal;
 @Controller
 public class AuthController {
 
+    public static final String NOT_CONNECTED = "Vous n'êtes pas connecté.";
     private final UserService userService;
 
     @Autowired
@@ -41,7 +42,7 @@ public class AuthController {
     @RequestMapping(value = {"/profile", "/profile/informations"}, method = RequestMethod.GET)
     public ModelAndView profileInformations(Principal principal) {
         if(principal == null) {
-            throw new IllegalStateException("Vous n'êtes pas connecté.");
+            throw new IllegalStateException(NOT_CONNECTED);
         }
 
         ModelAndView mNv = new ModelAndView("profile/informations");
@@ -53,7 +54,7 @@ public class AuthController {
     @RequestMapping(value = "/profile/journeys", method = RequestMethod.GET)
     public ModelAndView profileJourneys(Principal principal) {
         if(principal == null) {
-            throw new IllegalStateException("Vous n'êtes pas connecté.");
+            throw new IllegalStateException(NOT_CONNECTED);
         }
 
         ModelAndView mNv = new ModelAndView("profile/journeys");
@@ -66,7 +67,7 @@ public class AuthController {
     @RequestMapping(value = "/profile/messages", method = RequestMethod.GET)
     public ModelAndView profileMessages(Principal principal) {
         if(principal == null) {
-            throw new IllegalStateException("Vous n'êtes pas connecté.");
+            throw new IllegalStateException(NOT_CONNECTED);
         }
 
         ModelAndView mNv = new ModelAndView("profile/messages");

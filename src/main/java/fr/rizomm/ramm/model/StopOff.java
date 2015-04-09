@@ -43,40 +43,40 @@ public class StopOff {
 
     @Id
     @GeneratedValue
-    private Long id;
+    private Long id; //NOSONAR
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "journey_id")
     @JsonIgnore
-    private Journey journey;
+    private Journey journey; //NOSONAR
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "departure_point_id")
-    private StopOffPoint departurePoint;
+    private StopOffPoint departurePoint; //NOSONAR
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "arrival_point_id")
-    private StopOffPoint arrivalPoint;
+    private StopOffPoint arrivalPoint; //NOSONAR
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.stopOff", cascade = CascadeType.ALL)
     @JsonIgnore
-    private Set<StopOffReservation> reservations;
+    private Set<StopOffReservation> reservations; //NOSONAR
 
     @Column(name = "distance", nullable = false)
     @Min(0)
-    private Long distance;
+    private Long distance; //NOSONAR
 
     @Column(name = "available_seats", nullable = true)
     @Min(0)
-    private Integer availableSeats;
+    private Integer availableSeats; //NOSONAR
 
     @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)
-    private Status status = Status.INITIALIZED;
+    private Status status = Status.INITIALIZED; //NOSONAR
 
     @Column(name = "price", nullable = true)
     @Min(0)
-    private Double price;
+    private Double price; //NOSONAR
 
     @PreUpdate
     public void onUpdate() {

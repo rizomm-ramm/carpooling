@@ -24,9 +24,9 @@ public class StopOffReservationId implements Serializable {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "STOPOFF_ID")
-    private StopOff stopOff;
+    private StopOff stopOff; //NOSONAR
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "USERNAME")
-    private User user;
+    private User user; //NOSONAR
 }

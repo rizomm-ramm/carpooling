@@ -35,29 +35,29 @@ public class StopOffPoint {
 
     @Id
     @GeneratedValue
-    private Long id;
+    private Long id; //NOSONAR
 
     @Column(name = "latitude", nullable = false)
-    private double latitude;
+    private double latitude; //NOSONAR
 
     @Column(name = "longitude", nullable = false)
-    private double longitude;
+    private double longitude; //NOSONAR
 
     @Column(name = "address", nullable = false)
-    private String address;
+    private String address; //NOSONAR
 
     @Column(name = "date", nullable = false)
     @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
-    private Date date;
+    private Date date; //NOSONAR
 
     @Column(name = "description", nullable = true)
-    private String description;
+    private String description; //NOSONAR
 
     @Column(name = "type", nullable = false)
     @Enumerated(EnumType.STRING)
-    private Type type;
+    private Type type; //NOSONAR
 
     @OneToMany
     @JsonIgnore
-    private List<StopOff> stopOffs;
+    private List<StopOff> stopOffs; //NOSONAR
 }

@@ -26,15 +26,15 @@ public class UserRole {
 
     @Id
     @GeneratedValue
-    public Long user_role_id;
+    public Long user_role_id; //NOSONAR
 
     @ManyToOne
     @JoinColumn(name = "username")
     @JsonIgnore
-    private User user;
+    private User user; //NOSONAR
 
     @Column(name = "role", nullable = false)
     @Enumerated(EnumType.STRING)
-    private Role role;
+    private Role role; //NOSONAR
 
 }
