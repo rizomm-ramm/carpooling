@@ -1,19 +1,23 @@
 package fr.rizomm.ramm.service.impl;
 
+import com.google.common.collect.ImmutableList;
 import com.google.maps.model.Distance;
 import com.google.maps.model.DistanceMatrix;
 import com.google.maps.model.DistanceMatrixElement;
 import com.google.maps.model.DistanceMatrixElementStatus;
 import com.google.maps.model.DistanceMatrixRow;
 import com.google.maps.model.Duration;
+
 import fr.rizomm.ramm.model.Journey;
 import fr.rizomm.ramm.model.StopOff;
+import fr.rizomm.ramm.model.StopOff.Status;
 import fr.rizomm.ramm.model.StopOffPoint;
 import fr.rizomm.ramm.repositories.StopOffRepository;
 import fr.rizomm.ramm.service.GeoService;
 import fr.rizomm.ramm.service.NotificationService;
 import fr.rizomm.ramm.service.StopOffReservationService;
 import fr.rizomm.ramm.service.UserService;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,8 +27,10 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.Date;
+import java.util.List;
 
 import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
@@ -51,6 +57,27 @@ public class StopOffServiceImplTest {
     private NotificationService notificationService;
 
     private StopOffServiceImpl stopOffService;
+    
+    private StopOff stopOff1 = StopOff.builder()
+    		.distance(Long.valueOf("6520"))
+    		.availableSeats(4)
+    		.price(3.0)
+    		.status(Status.ACTIVATED)
+    		.build();
+
+    private StopOff stopOff2 = StopOff.builder()
+    		.distance(Long.valueOf("9222"))
+    		.availableSeats(2)
+    		.price(5.0)
+    		.status(Status.ACTIVATED)
+    		.build();
+
+    private StopOff stopOff3 = StopOff.builder()
+    		.distance(Long.valueOf("1270879"))
+    		.availableSeats(2)
+    		.price(100.0)
+    		.status(Status.ACTIVATED)
+    		.build();
 
 
     @Before
@@ -65,12 +92,35 @@ public class StopOffServiceImplTest {
 
     @Test
     public void testFindAll() throws Exception {
+        // Quand on appelle la méthode findAll du repository, on retourne [stopOff1, stopOff2, stopOff3]
+        when(stopOffRepository.findAll()).thenReturn(ImmutableList.of(stopOff1, stopOff2, stopOff3 ));
 
+        List<StopOff> stopOffList = stopOffService.findAll();
+
+        // Vérification du retour du service
+        assertThat(stopOffList, hasItems(stopOff1, stopOff2, stopOff3));
+
+        // Vérification que le repository a bien été appelé
+        verify(stopOffRepository, times(1)).findAll();
     }
 
     @Test
     public void testSaveAndFlush() throws Exception {
+        // When saveAndFlush is called we return the spotOff1
+        when(stopOffService.saveAndFlush(stopOff1)).thenReturn(stopOff1);
 
+        StopOff stopOff4 = stopOffService.saveAndFlush(stopOff1);
+        
+        // Vérification que le repository a bien été appelé
+        verify(stopOffRepository, times(1)).saveAndFlush(stopOff1);
+
+        assertThat(stopOff4, allOf(
+                        hasProperty("distance", is((Long.valueOf("6520")))),
+                        hasProperty("availableSeats", is(4)),
+                        hasProperty("price", is(3.0)),
+                        hasProperty("status", is(StopOff.Status.ACTIVATED))
+                )
+        );
     }
 
     @Test
