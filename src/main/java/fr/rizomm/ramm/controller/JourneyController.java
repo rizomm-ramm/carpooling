@@ -70,7 +70,7 @@ public class JourneyController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public ModelAndView createJourney(@PathVariable("id") Long id) {
+    public ModelAndView journey(@PathVariable("id") Long id) {
         ModelAndView mNv = new ModelAndView("journey/item");
         mNv.addObject("journey", journeyService.getOne(id));
 

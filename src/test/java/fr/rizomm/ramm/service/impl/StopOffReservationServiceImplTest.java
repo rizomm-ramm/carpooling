@@ -1,15 +1,11 @@
 package fr.rizomm.ramm.service.impl;
 
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasItems;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.reset;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import java.util.List;
-
+import com.google.common.collect.ImmutableList;
+import fr.rizomm.ramm.model.StopOffReservation;
+import fr.rizomm.ramm.model.StopOffReservation.Status;
+import fr.rizomm.ramm.model.StopOffReservationId;
+import fr.rizomm.ramm.repositories.StopOffReservationRepository;
+import fr.rizomm.ramm.service.StopOffReservationService;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,13 +13,15 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import com.google.common.collect.ImmutableList;
+import java.util.List;
 
-import fr.rizomm.ramm.model.StopOffReservation;
-import fr.rizomm.ramm.model.StopOffReservation.Status;
-import fr.rizomm.ramm.model.StopOffReservationId;
-import fr.rizomm.ramm.repositories.StopOffReservationRepository;
-import fr.rizomm.ramm.service.StopOffReservationService;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasItems;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.reset;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class StopOffReservationServiceImplTest {
