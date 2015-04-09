@@ -77,11 +77,10 @@ public class StopOffServiceImpl implements StopOffService {
         // Search for the minimum distance
         for (DistanceMatrixRow row : distance.rows) {
             for (DistanceMatrixElement element : row.elements) {
-                if(element.status.equals(DistanceMatrixElementStatus.OK)) {
-                    if(minDistance == null || minDistance > element.distance.inMeters) {
-                        minDistance = element.distance.inMeters;
-                        duration = element.duration.inSeconds;
-                    }
+                if(element.status.equals(DistanceMatrixElementStatus.OK)
+                    && (minDistance == null || minDistance > element.distance.inMeters)) {
+                    minDistance = element.distance.inMeters;
+                    duration = element.duration.inSeconds;
                 }
             }
         }

@@ -3,9 +3,7 @@ package fr.rizomm.ramm.controller;
 import fr.rizomm.ramm.form.BookSeatForm;
 import fr.rizomm.ramm.service.UserService;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,9 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-import javax.validation.constraints.Min;
 import java.security.Principal;
 import java.util.Collections;
 
@@ -25,14 +20,17 @@ import java.util.Collections;
 public class AuthController {
 
     public static final String NOT_CONNECTED = "Vous n'êtes pas connecté.";
+    public static final String INVALID_CREDENTIALS = "Username ou mot de passe invalide!";
+    public static final String LOGOUT = "Vous avez été déconnecté.";
+    public static final String REGISTRATION_OK = "Vous pouvez maintenant vous connecter avec le compte ";
+    public static final String REGISTRATION_ERROR = "Erreur lors de l'enregistrement : ";
+
     private final UserService userService;
-    private final AuthenticationManager authenticationManager;
 
 
     @Autowired
-    public AuthController(UserService userService, AuthenticationManager authenticationManager) {
+    public AuthController(UserService userService) {
         this.userService = userService;
-        this.authenticationManager = authenticationManager;
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
@@ -43,11 +41,11 @@ public class AuthController {
 
         ModelAndView model = new ModelAndView();
         if (error != null) {
-            model.addObject("error", "Invalid username and password!");
+            model.addObject("error", INVALID_CREDENTIALS);
         }
 
         if (logout != null) {
-            model.addObject("msg", "You've been logged out successfully.");
+            model.addObject("msg", LOGOUT);
         }
         model.setViewName("login");
         model.addObject("j_username", username);
@@ -57,9 +55,8 @@ public class AuthController {
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public String register(@RequestParam("j_username") @NotEmpty @Min(5) String username,
-                           @Valid @RequestParam("j_password") @NotEmpty @Min(5) String password,
-                           HttpServletRequest request,
+    public String register(@RequestParam("j_username") String username,
+                           @RequestParam("j_password") String password,
                            RedirectAttributes redirectAttributes) {
 
         try {
@@ -68,10 +65,10 @@ public class AuthController {
             redirectAttributes.addFlashAttribute("j_password", password);
 
             redirectAttributes.addFlashAttribute("notifications",
-                    Collections.singletonList("Vous pouvez maintenant vous connecter avec le compte " + username));
+                    Collections.singletonList(REGISTRATION_OK + username));
         } catch (Exception e) {
             log.error("Unable to register the user {}", username, e);
-            redirectAttributes.addFlashAttribute("errors", Collections.singletonList("Erreur survenue : " + e.getMessage()));
+            redirectAttributes.addFlashAttribute("errors", Collections.singletonList(REGISTRATION_ERROR + e.getMessage()));
         }
 
         return "redirect:/login";

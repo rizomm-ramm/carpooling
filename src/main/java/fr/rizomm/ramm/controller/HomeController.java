@@ -15,9 +15,4 @@ public class HomeController {
         return "index";
     }
 
-    @RequestMapping("/private")
-    public String privateIndex() {
-        return "private";
-    }
-
 }
