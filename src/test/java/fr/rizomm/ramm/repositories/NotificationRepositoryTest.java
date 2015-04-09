@@ -48,10 +48,8 @@ public class NotificationRepositoryTest {
 	@Before
 	public void clearNotificationTable() throws ParseException{
 		if(firstTime){
-			u = User.builder().username("user1").password("pwd").enabled(true).build();
-			u2 = (User.builder().username("user2").password("pwd").enabled(false).build());
-			userRepository.save(u);
-			userRepository.save(u2);
+			u = userRepository.findOne("amaury");
+			u2 = userRepository.findOne("maxime");
 			
 	    	n1 = new Notification(Long.valueOf(0), u, Status.UNREAD, Type.DEFAULT, "notif1", new Date(), "path/to/link");
 	    	n2 = new Notification(Long.valueOf(1), u, Status.READ, Type.DANGER, "notif2", new Date(), "path/to/link");

@@ -31,6 +31,6 @@ public class UserRepositoryTest {
 	 @Test
 	 public void testFindAll() {
         List<User> userEntries = userRepository.findAll();
-        assertThat(userEntries.size(), is(6));
+        assertThat(userEntries.size(), is(4));
      }
 }
