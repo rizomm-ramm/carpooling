@@ -1,6 +1,7 @@
 package fr.rizomm.ramm.controller;
 
 import com.google.common.collect.ImmutableList;
+import fr.rizomm.ramm.form.BookSeatForm;
 import fr.rizomm.ramm.form.SimpleJourneyForm;
 import fr.rizomm.ramm.model.Journey;
 import fr.rizomm.ramm.service.JourneyService;
@@ -73,6 +74,7 @@ public class JourneyController {
     public ModelAndView journey(@PathVariable("id") Long id) {
         ModelAndView mNv = new ModelAndView("journey/item");
         mNv.addObject("journey", journeyService.getOne(id));
+        mNv.addObject("bookSeatForm", new BookSeatForm());
 
         return mNv;
     }

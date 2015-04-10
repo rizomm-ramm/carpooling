@@ -295,10 +295,6 @@ public class StopOffServiceImpl implements StopOffService {
 
         StopOffReservation reservation = stopOffReservationService.getOne(new StopOffReservationId(stopOff, passenger));
 
-        if(!StopOffReservation.Status.WAITING.equals(reservation.getStatus())) {
-            throw new IllegalStateException("Le statut de la réservation n'est plus en attente et ne peut plus �tre modifi�");
-        }
-
         if(StopOffReservation.Status.VALIDATED.equals(status)) {
             reservation.setPayed(true);
 
